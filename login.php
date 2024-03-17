@@ -2,6 +2,7 @@
 <link href = "css/style.css" type="text/css" rel="stylesheet"/>
 
 <?php
+    session_start();
     include 'connect.php';
     require_once 'includes/header.php';
 ?>
@@ -22,7 +23,7 @@
                     <label for="pass">Password: </label>
                     <input type="password" id="pass" name="password" required/>
                 </div>
-
+                
                 <div id="exist"> </div>
                 <button class="btn-1" name="login" type="submit">LOG IN</button>
             </form>
@@ -56,9 +57,7 @@
             //         </script>";
             echo "<script>
                     var x = document.getElementById('exist');
-                    if (x.innerHTML === ' ') {
-                        x.innerHTML = '*Username does not exist';
-                    }
+                    x.innerHTML = '*Username does not exist';
                 </script>
             ";
             //hey
@@ -72,9 +71,7 @@
                 //     </script>";
                 echo "<script>
                         var x = document.getElementById('exist');
-                        if (x.innerHTML === ' ') {
-                            x.innerHTML = '*Incorrect password';
-                        }
+                        x.innerHTML = '*Incorrect password';
                     </script>";
             }
         }

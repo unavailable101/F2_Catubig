@@ -2,6 +2,7 @@
 <script src="js/script.js"></script>
 
 <?php
+    session_start();
 	include 'connect.php';
 	include 'includes/header.php';
 ?>  
@@ -12,32 +13,35 @@
             <form method = POST>
                 <!--first name-->
                 <div class="txt_field">
-                    <input type=text name="firstname">
+                    <input type=text name="firstname" required>
                     <label>First Name</label>
                 </div>
                 <!--last name-->
                 <div class="txt_field">
-                    <input type=text name="lastname">
+                    <input type=text name="lastname" required>
                     <label>Last Name</label>
                 </div>
                 <!--username-->
                 <div class="txt_field">
-                    <input type=text name="username">
+                    <input type=text name="username" required>
                     <label>Username</label>
                 </div>
                 <!--gender-->
-                <div class="txt_field">
-                    <input type=text name="gender">
+                <div id="radio-btn">
+                    <div id="btns">
+                        <input type=radio name="gender" value="Male" required> Male
+                        <input type=radio name="gender" value="Female" required> Female
+                    </div>  
                     <label>Gender</label>
                 </div>
                 <!--email-->
                 <div class="txt_field">
-                    <input type=email name="email">
+                    <input type=email name="email" required>
                     <label>Email</label>
                 </div>
                 <!--password-->
                 <div class="txt_field">
-                    <input type=password name="password">
+                    <input type=password name="password" required>
                     <label>Password</label>
                 </div>
 
@@ -82,12 +86,11 @@
             //             alert('New record saved.');
             //       </script>";
             header("location: index.php");
+            $_SESSION['username'] = $uname;
         }else{
             echo "<script>
                     var x = document.getElementById('exist');
-                    if (x.innerHTML === ' ') {
-                        x.innerHTML = '*Username or Email Address already exist';
-                    }
+                    x.innerHTML = '*Username or Email Address already exist';
                   </script>";
                   //hey
         }

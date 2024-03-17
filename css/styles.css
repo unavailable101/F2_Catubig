@@ -109,6 +109,35 @@ input[type="submit"]:hover{
     color:rgb(56, 220, 241);
 }
 
+form #radio-btn{
+    position: relative;
+    border-bottom: 2px solid #7c7070;
+    margin: 10px 0;
+}
+
+#radio-btn label{
+    position: absolute;
+    top: 10%;
+    left: 5px;
+    color: black;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+}
+
+#radio-btn #btns{
+    width: 100%;
+    padding: 0px 50px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+#btns input[type="radio"]{
+    margin: 10px 0 0 50px;
+}
+
 /*header styles*/
 header{
     display: flex;
