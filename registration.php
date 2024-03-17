@@ -46,7 +46,7 @@
                 <input name="sign-up" type="submit" value="Sign Up">
 
                 <div class="signup_link">
-                    Have an account? <a href="#">Login Here</a>
+                    Have an account? <a href="login.php">Login Here</a>
                 </div>
             </form>
     </div>

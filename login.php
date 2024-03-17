@@ -22,13 +22,14 @@
                     <label for="pass">Password: </label>
                     <input type="password" id="pass" name="password" required/>
                 </div>
+
+                <div id="exist"> </div>
                 <button class="btn-1" name="login" type="submit">LOG IN</button>
             </form>
-            <p id="error" class="err-msg"></p>
         </div>
     </div>
     <p class="extra">
-        Need an account? <a href="#">Sign up for free.</a>
+        Need an account? <a href="registration.php">Sign up for free.</a>
     </p>
     <p class="extra">
         Forgot password?

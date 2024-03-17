@@ -9,9 +9,21 @@
 		</a>
 	    </span>
 	    <span class="nav-item">
-		<a href="login.php">
-		    Log In
-		</a>
+			<?php
+				if (!isset($_SESSION['username'])){
+					echo '
+					<a href="login.php">
+						Log In
+					</a>
+					';
+				} else {
+					echo '
+					<a href="logout.php">
+						Log Out
+					</a>
+					';
+				}
+			?>
 	    </span>
 	    <span class="nav-item">
 		<a href="index.php">
