@@ -40,25 +40,43 @@
         $uname = $_POST['username'];
         $pwd = $_POST['password'];
         //check tbluseraccount if username is existing
-            $sql ="Select * from tbluseraccount where username='".$uname."'";
+        $sql ="Select * from tbluseraccount where username='".$uname."'";
 
-            $result = mysqli_query($connection,$sql);
+        $result = mysqli_query($connection,$sql);
 
-            $count = mysqli_num_rows($result);
-            $row = mysqli_fetch_array($result);
+        //number of counts that has the same username
+        $count = mysqli_num_rows($result);
 
-            if($count== 0){
-                echo "<script language='javascript'>
-                            alert('username not existing.');
-                      </script>";
-            }else if($row[3] != $pwd) {
-                echo "<script language='javascript'>
-                            alert('Incorrect password');
-                      </script>";
-            }else{
+        //ika-pila na row na same ang user input ug 
+        $row = mysqli_fetch_array($result);
+        if ($count == 0){
+            // echo "<script language='javascript'>
+            //             alert('username not existing.');
+            //         </script>";
+            echo "<script>
+                    var x = document.getElementById('exist');
+                    if (x.innerHTML === ' ') {
+                        x.innerHTML = '*Username does not exist';
+                    }
+                </script>
+            ";
+            //hey
+        } else {
+            if ( password_verify($pwd, $row[3] ) ){
                 $_SESSION['username']=$row[0];
                 header("location: index.php");
+            } else {
+                // echo "<script language='javascript'>
+                //         alert('Incorrect password');
+                //     </script>";
+                echo "<script>
+                        var x = document.getElementById('exist');
+                        if (x.innerHTML === ' ') {
+                            x.innerHTML = '*Incorrect password';
+                        }
+                    </script>";
             }
+        }
     }
 ?>
 

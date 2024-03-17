@@ -233,6 +233,8 @@ header .nav{
     border-radius: 5px;
 }
 
+/* hey */
+
 .content-right input[type="submit"]{
     width: 50%;
     height: 40px;
@@ -244,4 +246,10 @@ header .nav{
     margin: 20px auto;
     margin-left: 50%;
     transform: translateX(-50%);
+}
+
+/* under registration.php */
+/* for alerts in register and login */
+#exist{
+    color: #f00;
 }

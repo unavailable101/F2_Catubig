@@ -1,4 +1,5 @@
 <link href = "css/styles.css" type="text/css" rel="stylesheet"/>
+<script src="js/script.js"></script>
 
 <?php
 	include 'connect.php';
@@ -39,7 +40,11 @@
                     <input type=password name="password">
                     <label>Password</label>
                 </div>
+
+                <div id="exist"> </div>
+
                 <input name="sign-up" type="submit" value="Sign Up">
+
                 <div class="signup_link">
                     Have an account? <a href="#">Login Here</a>
                 </div>
@@ -59,31 +64,34 @@
         $uname=$_POST['username'];
         $pword=$_POST['password'];
 
+        //hash password
+        $hash_pword = password_hash($pword,PASSWORD_BCRYPT);
+
         //save data to tbluserprofile
         $sql1 ="Insert into tbluserprofile(firstname,lastname,gender) values('".$fname."','".$lname."','".$gender."')";
         mysqli_query($connection,$sql1);
 
         //Check tbluseraccount if username is already existing. Save info if false. Prompt msg if true.
-        $sql2 ="Select * from tbluseraccount where username='".$uname."'";
+        $sql2 = "SELECT * FROM tbluseraccount WHERE username='$uname' OR emailadd='$email'";
         $result = mysqli_query($connection,$sql2);
         $row = mysqli_num_rows($result);
         if($row == 0){
-            $sql ="Insert into tbluseraccount(emailadd,username,password) values('".$email."','".$uname."','".$pword."')";
+            $sql ="Insert into tbluseraccount(emailadd,username,password) values('".$email."','".$uname."','".$hash_pword."')";
             mysqli_query($connection,$sql);
-            echo "<script language='javascript'>
-                        alert('New record saved.');
-                  </script>";
-            //header("location: index.php");
+            // echo "<script language='javascript'>
+            //             alert('New record saved.');
+            //       </script>";
+            header("location: index.php");
         }else{
-            echo "<script language='javascript'>
-                        alert('Username already existing');
+            echo "<script>
+                    var x = document.getElementById('exist');
+                    if (x.innerHTML === ' ') {
+                        x.innerHTML = '*Username or Email Address already exist';
+                    }
                   </script>";
+                  //hey
         }
-
-
     }
-
-
 ?>
 
 <?php

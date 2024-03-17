@@ -12,9 +12,9 @@
 		    <li><a href="#">About us</a></li>
 		</ul>
 	    </div>
-
+		<!-- hey -->
 	    <div class="row">
-		Niña Margarette Catubig and Ana Marie Alimurung<br>
+		NiÃ±a Margarette Catubig and Ana Marie Alimurung<br>
 		BSCS - 2
 	    </div>
 	</div>
