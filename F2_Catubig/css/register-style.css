@@ -1,0 +1,235 @@
+body {
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url("420302-anime-anime-girls-original-characters-landscape.jpg"); */
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url("anidraw-net.jpg"); */
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url("nft.png"); */
+    background-image: url("../images/nft.png");
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: center;
+    background-attachment: fixed;
+}
+.logo-big{
+    filter: brightness(0) drop-shadow(0 0 0.75rem rgb(255, 255, 255));
+}
+
+.register-box{
+    position: relative;
+    width: 800px;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.75);
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin: 0 auto;
+    color: aliceblue;
+}
+
+.register-box h2{
+    margin: 0 0 30px;
+    padding: 0;
+    text-align: center;
+}
+
+.register-box .form-div{
+    display:flex;
+    flex-direction: row;
+    /* border: 1px solid white; */
+}
+
+.register-box .form-div .inline-div{
+    margin: 0 10px;
+    padding: 0 10px;
+    width: 50%;
+    /* border: 1px solid white; */
+}
+
+.register-box .form-div .inline-div .inner-inline{
+    display: flex;
+    flex-direction: row;
+}
+
+.register-box .user-box{
+    position: relative;
+    margin: 0 5px;
+}
+
+.register-box .user-box .typing {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: aliceblue;
+    margin: 15px 0;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.register-box .user-box .selecting{
+    border-radius: 0;
+}
+
+.register-box .user-box .selecting option{
+    background: black;
+    color: aliceblue;
+}
+
+.register-box .user-box label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px 0;
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.register-box .user-box .label-input{
+    color: aliceblue;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.register-box .user-box .typing:focus ~ .label-input,
+.register-box .user-box .typing:valid ~ .label-input{
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.register-box form .register-btn{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    text-align: center;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    /* margin-top: 40px; */
+    letter-spacing: 4px;
+    background: transparent;
+    border: none;
+}
+
+.register-box .register-btn:hover{
+    background: #03e9f4;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 50px #03e9f4,
+                0 0 100px #03e9f4;
+}
+
+.register-box .register-btn span {
+    position: absolute;
+    display: block;
+}
+
+.register-box .register-btn span:nth-child(1){
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+    0% {
+        left: -100%;
+    }
+    50%, 100%{
+        left: 100%;
+    }
+}
+
+.register-box .register-btn span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #03e9f4);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+}
+
+@keyframes btn-anim2 {
+    0% {
+        top: -100%;
+    }
+    50%,100% {
+        top: 100%;
+    }
+}
+
+.register-box .register-btn span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #03e9f4);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+}
+
+@keyframes btn-anim3 {
+    0% {
+        right: -100%;
+    }
+    50%,100% {
+        right: 100%;
+    }
+}
+
+.register-box .register-btn span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+}
+
+@keyframes btn-anim4 {
+    0% {
+        bottom: -100%;
+    }
+    50%,100% {
+        bottom: 100%;
+    }
+}
+
+.register-box hr{
+    border: 0.5px solid #1a1c20;
+}
+
+.register-box .have-account{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    color: #706C61;
+    font-size: small;
+}
+
+.register-box .have-account #to-login{
+    text-decoration: none;
+    font-weight: bolder;
+    color: #706C61;
+    transition: .5s;
+}
+
+.register-box .have-account #to-login:hover{
+    text-decoration: underline;
+    font-weight: bolder;
+    color: #03e9f4;
+    transition: .5s;
+}
