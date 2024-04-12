@@ -1,0 +1,146 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+/* for logo in login and register */
+.logo-big{
+    /* actual style for the logo */
+    padding: 2vmax 10vmax;
+    width: 30%;
+    height: auto;
+    margin-bottom: 0;
+}
+
+/* for the header part  */
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: aliceblue;
+    background: linear-gradient(180deg, black, #03e9f4);
+}
+
+.header-inner{
+    padding: 10px 10px 0;
+}
+
+.header-inner img{
+    filter: brightness(0) invert(1);
+}
+
+.navs{
+    display: flex;
+    align-items: flex-end;
+}
+
+.navs a{
+    color: white;
+    text-decoration: none;
+    padding: 0 0 10px;
+}
+
+.navs .nav-item{
+    padding: 20px 25px 10px;
+    margin: 0 5px;
+    transition: .5s;
+}
+
+.navs .nav-item:hover{
+    background: #03e9f4;
+    color: black;
+    transition: .5s;
+} 
+
+/* kani kay katung hr that's under header*/
+.under-header{
+    margin: 0;
+}
+
+/* the main content of the page */
+.main{
+    position: relative;
+    min-height: 100vh;
+}
+
+.for-admin{
+    padding: 20px;
+    /* border: 1px solid black; */
+}
+
+.for-admin a{
+    color: black;
+    text-decoration: none;
+}
+
+.for-admin a span{
+    border: 1px solid black;
+    padding: 10px;
+    margin: 0 10px;
+}
+
+/* the table part which will only be seen by the user */
+/* temp kay for submission purposes only */
+.table{
+    margin: 10px auto;
+}
+
+.table th, .table td{
+    padding: 10px;
+}
+
+.table th{
+    background: #074173;
+    color: white;
+}
+.table td{
+    background: #B3C8CF;
+}
+
+/* footer part pero wa lang contents */
+.footer{
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto;
+    background: black;
+    padding: 30px 0 10px;
+    text-align: center;
+    color: aliceblue;
+}
+
+.footer .row{
+    width: 100%;
+    margin: 1% 0;
+    padding: 0.6% 0;
+    font-size: .8rem;
+}
+
+.footer .row img{
+    filter: brightness(0) invert(1);
+    padding: 30px 0;
+}
+
+
+.footer .row a{
+    text-decoration:none;
+    color:aliceblue;
+    transition:0.5s;
+    font-size:2em;
+    margin:0% 1%;
+}
+
+.footer .row a:hover{
+    color:#03e9f4;
+}
+
+.footer .row ul{
+    width: auto;
+}
+
+.footer .row li{
+    width: 100px;
+    display:inline-block;
+    margin-right:30px;
+    font-size: 8px;
+}

@@ -1,41 +1,47 @@
-<link href = "css/styles.css" type="text/css" rel="stylesheet"/>
-<link href = "css/style.css" type="text/css" rel="stylesheet"/>
-
 <?php
     session_start();
     include 'connect.php';
-    require_once 'includes/header.php';
 ?>
 
-<section class="content-login">
-    <h1>Join the CONquests</h1>
-    <div class="login-time">
-        <div class="log-in">
-            <h2>LOG IN</h2>
-            <form id="log-in-form" method="POST">
-                <div class="input">
-                    <!-- username -->
-                    <label for="username">Username: </label>
-                    <input type="text" id="username" name="username" required/>
-                </div>
-                <div class="input">
-                    <!-- password -->
-                    <label for="pass">Password: </label>
-                    <input type="password" id="pass" name="password" required/>
-                </div>
-                
-                <div id="exist"> </div>
-                <button class="btn-1" name="login" type="submit">LOG IN</button>
-            </form>
+<body>
+    <link href="css/login-style.css" type="text/css" rel="stylesheet" />
+    <link href="css/common-style.css" type="text/css" rel="stylesheet" />
+
+    <center>
+        <img class="logo-big" src="images/logo-1.png">
+    </center>
+        
+    <div class="login-box">
+        <h2> L O G I N </h2>
+        <form>
+            <div class="user-box">
+                <input type="text" name="" required="">
+                <label>Username</label>
+            </div>
+            <div class="user-box">
+                <input type="password" name="" required="">
+                <label>Password</label>
+                <a id="forgot-pass" href="#">
+                    Forgot Password?
+                </a>
+            </div>
+            <button class="login-btn" type="submit">
+                <!-- for effect ning mga span mamsh ha -->
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Login
+            </button>
+        </form>
+        <hr>
+        <span class="no-account">
+            Don't have an account?
+            <a id="to-register" href="#">Register</a>
+        </span>
         </div>
-    </div>
-    <p class="extra">
-        Need an account? <a href="registration.php">Sign up for free.</a>
-    </p>
-    <p class="extra">
-        Forgot password?
-    </p>
-</section>
+
+</body>
 
 <?php
     if(isset($_POST['login'])){
@@ -76,9 +82,4 @@
             }
         }
     }
-?>
-
-
-<?php
-    require_once 'includes/footer.php';
 ?>

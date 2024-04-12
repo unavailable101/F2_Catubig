@@ -1,34 +1,36 @@
-<header>
-	<div class="logo">
-	    <img src="images/logo.png">
+<header class="header">
+	<div class="header-inner">
+		<img src="images/logo.png">
 	</div>
-	<div class="nav">
-	    <span class="nav-item">
-		<a href="registration.php">
-		    Sign Up
-		</a>
-	    </span>
-	    <span class="nav-item">
-			<?php
-				if (!isset($_SESSION['username'])){
-					echo '
-					<a href="login.php">
-						Log In
-					</a>
-					';
-				} else {
-					echo '
-					<a href="logout.php">
-						Log Out
-					</a>
-					';
-				}
-			?>
-	    </span>
-	    <span class="nav-item">
+	<div class="header-inner navs">
 		<a href="index.php">
-		    Home
+			<span class="nav-item">Home</span>
 		</a>
-	    </span>
+		<a href="#">
+			<span class="nav-item">Events</span>
+		</a>
+		<?php
+			if (!isset($_SESSION['username'])){
+				echo '
+				<a href="registration.php">
+					<span class="nav-item">Sign-Up</span>
+				</a>
+				<a href="login.php">
+					<span class="nav-item">Login</span>
+				</a>
+				';
+			} else {
+				echo '
+				<a href="#">
+					<span class="nav-item">Profile</span>
+				</a>
+				<a href="logout.php">
+					<span class="nav-item">Logout</span>
+				</a>
+				';
+			}
+		?>
 	</div>
 </header>
+
+<hr class="under-header">
