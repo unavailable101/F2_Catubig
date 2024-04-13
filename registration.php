@@ -147,9 +147,10 @@
 
                 // Insert into tbladminstatus
                 $isAdmin = true;
-                $sql_adminStatus = "INSERT INTO tbladminstatus (isAdmin, adminID) VALUES (?, ?)";
+                $sql_adminStatus = "INSERT INTO tbladminstatus (isAdmin, accountID) VALUES (?, ?)";
                 $stmt_adminStatus = $connection->prepare($sql_adminStatus);
-                $stmt_adminStatus->bind_param("ii", $isAdmin, $adminID);
+                // $stmt_adminStatus->bind_param("ii", $isAdmin, $adminID);
+                $stmt_adminStatus->bind_param("ii", $isAdmin, $accountID);
                 $stmt_adminStatus->execute();
                 $adminStatusID = $connection->insert_id;
 
