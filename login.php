@@ -37,7 +37,7 @@
         <hr>
         <span class="no-account">
             Don't have an account?
-            <a id="to-register" href="#">Register</a>
+            <a id="to-register" href="registration.php">Register</a>
         </span>
         </div>
 

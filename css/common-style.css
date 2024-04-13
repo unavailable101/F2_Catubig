@@ -18,7 +18,8 @@ body{
     flex-direction: row;
     justify-content: space-between;
     color: aliceblue;
-    background: linear-gradient(180deg, black, #03e9f4);
+    /* background: linear-gradient(180deg, black, #03e9f4); */
+    background:black;
 }
 
 .header-inner{
@@ -47,7 +48,8 @@ body{
 }
 
 .navs .nav-item:hover{
-    background: #03e9f4;
+    /* background: #03e9f4; */
+    background: linear-gradient(180deg, black, #03e9f4);
     color: black;
     transition: .5s;
 } 

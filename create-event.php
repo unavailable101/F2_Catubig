@@ -4,27 +4,30 @@
 
 <body>
     <?php
+        session_start();
     	include('includes/header.php');
+    	include 'connect.php';
     ?>
     <div class="main">
 
-        <form>
+        <form action="" method="POST">
             <h3>Create Event</h3>
             <div>
                 <label for="event-name">Event Name</label>
-                <input type="text" id="first-name">
+                <input type="text" name="event-name" id="first-name">
             </div>
             <div>
                 <label for="event-type">Event Type</label>
-                <input type="text" id="event-type">
+                <input type="text" name="event-type" id="event-type">
                 </div>
             <div>
                 <label for="date">Date</label>
-                <input type="date" id="date">
+                <input type="date" name="date" id="date">
             </div>
             <div>
                 <label for="time">Time</label>
-                <select id="hour">
+                <input type="time" name="time" id="time">
+                <!-- <select id="hour">
                     <option value="">Hour</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -38,7 +41,6 @@
                     <option value="10">10</option>
                     <option value="11">11</option>
                     <option value="12">12</option>
-                    <!-- Add more options for hours -->
                 </select>
                 :
                 <select id="minute">
@@ -59,17 +61,46 @@
                 <select id="period">
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
-                </select>
+                </select> -->
             </div>
             <div id="venue">
                 <label for="address">Venue</label>
-                <input type="text" id="address" placeholder="Street Address">
-                <input type="text" id="city" placeholder="City">
+                <input type="text" name="venue" id="address">
+                <!-- <input type="text" id="city"  placeholder="Street Address" placeholder="City"> -->
             </div>
-            <button type="submit">CREATE</button>
+            <button name="create" type="submit">CREATE</button>
         </form>
 
     </div>
+
+    <?php
+        if(isset($_POST['create'])){
+            $eventName = $_POST['event-name'];
+            $eventType = $_POST['event-type'];
+            $eventDate = $_POST['date'];
+            $eventTime = $_POST['time'];
+            $eventVenue = $_POST['venue'];
+        }
+
+        $sql1 = "SELECT * FROM tblevents WHERE eventName='$eventName' AND eventType='$eventType'";
+        $result = mysqli_query($connection,$sql1);
+        $row = mysqli_num_rows($result);
+        if($row == 0){
+            $sql ="Insert into tblevents(eventName, eventType, date, time, venue) values( ' ".$eventName." ',' ".$eventType." ',' ".$eventDate." ',' ".$eventTime." ',' ".$eventVenue."' )";
+            mysqli_query($connection,$sql);
+            echo "<script language='javascript'>
+                        alert('New record saved.');
+                  </script>";
+            header("location: index.php");
+        }else{
+            echo "<script>
+                    var x = document.getElementById('exist');
+                    x.innerHTML = '*Username or Email Address already exist';
+                  </script>";
+                  //hey
+        }
+
+    ?>
 
     <?php
     	include('includes/footer.php');
