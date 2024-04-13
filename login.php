@@ -62,16 +62,13 @@
 
         //ika-pila na row na same ang user input ug 
         $account_row = mysqli_fetch_array($result_account);
+
         if ($count == 0){
-            // echo "<script language='javascript'>
-            //             alert('username not existing.');
-            //         </script>";
             echo "<script>
             var x = document.getElementById('exist');
             x.innerHTML = '*Username does not exist';
             </script>
             ";
-            //hey
         } else {
             if ( password_verify($pwd, $account_row['password'] ) ){
                 
@@ -80,11 +77,11 @@
                 $isExist = mysqli_num_rows($result_stat);
                 
                 if ($isExist != 0){
-                    $row_stat = mysqli_fetch_array($result_account);
+                    $row_stat = mysqli_fetch_array($result_stat);
                     
                     $sql_admin ="Select * from tbladminaccount where adminID='".$row_stat['adminStatusID']."'";
                     $result_admin = mysqli_query($connection,$sql_admin);
-                    $isAdminExist = mysqli_num_rows($result_stat);
+                    $isAdminExist = mysqli_num_rows($result_admin);
                     
                     if ($isAdminExist!=0){
                         $admin_row = mysqli_fetch_array($result_admin);
@@ -94,11 +91,11 @@
                         $_SESSION['username']=$account_row['username'];
                     }
                 } else {
-                    $sql_user ="Select * from tbluseraccount where userID='".$account_row['accountID']."'";
+                    $sql_user ="Select * from tbluseraccount where accountID='".$account_row['accountID']."'";
                     $result_user = mysqli_query($connection,$sql_user);
                     $isUserExist = mysqli_num_rows($result_user);
                     
-                    if ($isUserExist!=0){
+                    if ($isUserExist != 0){
                         $user_row = mysqli_fetch_array($result_user);
                         
                         $_SESSION['isAdmin']=false;
