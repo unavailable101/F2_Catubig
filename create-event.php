@@ -14,11 +14,11 @@
             <h3>Create Event</h3>
             <div>
                 <label for="event-name">Event Name</label>
-                <input type="text" name="event-name" id="first-name">
+                <input type="text" name="event-name" id="first-name" required>
             </div>
             <div>
                 <label for="event-type">Event Type</label>
-                <input type="text" name="event-type" id="event-type">
+                <input type="text" name="event-type" id="event-type" required>
                 </div>
             <div>
                 <label for="date">Date</label>
@@ -65,7 +65,7 @@
             </div>
             <div id="venue">
                 <label for="address">Venue</label>
-                <input type="text" name="venue" id="address">
+                <input type="text" name="venue" id="address" required>
                 <!-- <input type="text" id="city"  placeholder="Street Address" placeholder="City"> -->
             </div>
             <button name="create" type="submit">CREATE</button>
@@ -80,25 +80,26 @@
             $eventDate = $_POST['date'];
             $eventTime = $_POST['time'];
             $eventVenue = $_POST['venue'];
+
+            $sql1 = "SELECT * FROM tblevents WHERE eventName='$eventName' AND eventType='$eventType'";
+            $result = mysqli_query($connection,$sql1);
+            $row = mysqli_num_rows($result);
+            if($row == 0){
+                $sql ="Insert into tblevents(eventName, eventType, date, time, venue) values( ' ".$eventName." ',' ".$eventType." ',' ".$eventDate." ',' ".$eventTime." ',' ".$eventVenue."' )";
+                mysqli_query($connection,$sql);
+                echo "<script language='javascript'>
+                            alert('New record saved.');
+                      </script>";
+                header("location: index.php");
+            }else{
+                echo "<script>
+                        var x = document.getElementById('exist');
+                        x.innerHTML = '*Username or Email Address already exist';
+                      </script>";
+                      //hey
+            }
         }
 
-        $sql1 = "SELECT * FROM tblevents WHERE eventName='$eventName' AND eventType='$eventType'";
-        $result = mysqli_query($connection,$sql1);
-        $row = mysqli_num_rows($result);
-        if($row == 0){
-            $sql ="Insert into tblevents(eventName, eventType, date, time, venue) values( ' ".$eventName." ',' ".$eventType." ',' ".$eventDate." ',' ".$eventTime." ',' ".$eventVenue."' )";
-            mysqli_query($connection,$sql);
-            echo "<script language='javascript'>
-                        alert('New record saved.');
-                  </script>";
-            header("location: index.php");
-        }else{
-            echo "<script>
-                    var x = document.getElementById('exist');
-                    x.innerHTML = '*Username or Email Address already exist';
-                  </script>";
-                  //hey
-        }
 
     ?>
 

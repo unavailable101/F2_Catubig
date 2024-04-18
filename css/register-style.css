@@ -116,6 +116,7 @@ body {
     letter-spacing: 4px;
     background: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .register-box .register-btn:hover{

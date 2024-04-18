@@ -52,6 +52,7 @@
                     <th>Date</th>
                     <th>Time</th>
                     <th>Venue</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -67,6 +68,9 @@
                     <td><?= $row['date']; ?> </td>
                     <td><?= $row['time']; ?> </td>
                     <td><?= $row['venue']; ?> </td>
+                    <td>
+                        <a href = "<?php deleteEvents($row['eventID'], $connection); ?>">Delete</a>
+                    </td>
                 </tr>
                 
                 <?php endwhile;?>
@@ -90,6 +94,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -107,6 +112,9 @@
                     <td> <?= $admin_account['firstName']; ?> </td>
                     <td> <?= $admin_account['lastName']; ?> </td>
                     <td> <?= $admin_account['username']; ?> </td>
+                    <td>
+                        <a href = " <?php deleteAdmin(); ?> ">Delete</a>
+                    </td>
                     
                 </tr>
                 
@@ -131,6 +139,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -148,7 +157,9 @@
                     <td> <?= $user_account['firstName']; ?> </td>
                     <td> <?= $user_account['lastName']; ?> </td>
                     <td> <?= $user_account['username']; ?> </td>
-                    
+                    <td>
+                        <a href = "<?php deleteUser(); ?>">Delete</a>
+                    </td>
                 </tr>
                 
                 <?php endwhile;?>
@@ -160,5 +171,18 @@
 
     <?php
     	include('includes/footer.php');
+
+        function deleteAdmin(){
+
+        }
+
+        function deleteUser(){
+
+        }
+
+        function deleteEvents($eventID, $connection){
+            $sql="DELETE FROM tblevents WHERE eventID='$eventID'";
+            $all_admin = mysqli_query($connection,$sql);
+        }
     ?>
 </body>

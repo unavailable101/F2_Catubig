@@ -28,6 +28,7 @@ body{
 
 .header-inner img{
     filter: brightness(0) invert(1);
+    margin: 10px 0;
 }
 
 .navs{
@@ -88,7 +89,7 @@ body{
 }
 
 .table th, .table td{
-    padding: 10px;
+    padding: 20px;
 }
 
 .table th{
@@ -97,6 +98,20 @@ body{
 }
 .table td{
     background: #B3C8CF;
+}
+.table td a {
+    text-decoration: none;
+    color: black;
+    background-color: #378CE7;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0;
+    transition: .5s;
+}
+
+.table td a:hover{
+    background-color: #5356FF;
+    transition: .5s;
 }
 
 /* footer part pero wa lang contents */
