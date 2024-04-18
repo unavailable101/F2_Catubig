@@ -69,7 +69,7 @@
                     <td><?= $row['time']; ?> </td>
                     <td><?= $row['venue']; ?> </td>
                     <td>
-                        <a href = "<?php deleteEvents($row['eventID'], $connection); ?>">Delete</a>
+                        <button onclick="<?php deleteEvents($row['eventID'], $connection); ?>" >Delete</button>
                     </td>
                 </tr>
                 
