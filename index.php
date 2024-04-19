@@ -1,5 +1,4 @@
 <?php
-    session_start();
 	include 'connect.php';
 ?>
 
@@ -69,7 +68,7 @@
                     <td><?= $row['time']; ?> </td>
                     <td><?= $row['venue']; ?> </td>
                     <td>
-                        <button onclick="<?php deleteEvents($row['eventID'], $connection); ?>" >Delete</button>
+                        <a href="includes/deleteEvents.php?eventID=<?=$row['eventID'];?>" >Delete</a>
                     </td>
                 </tr>
                 
@@ -94,7 +93,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
-                    <th></th>
+                    <!-- <th></th> -->
                 </tr>
             </thead>
             <tbody>
@@ -113,7 +112,7 @@
                     <td> <?= $admin_account['lastName']; ?> </td>
                     <td> <?= $admin_account['username']; ?> </td>
                     <td>
-                        <a href = " <?php deleteAdmin(); ?> ">Delete</a>
+                        <a href="includes/deleteAdmin.php?adminID=<?=$row['adminID'];?>" >Delete</a>
                     </td>
                     
                 </tr>
@@ -139,7 +138,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
-                    <th></th>
+                    <!-- <th></th> -->
                 </tr>
             </thead>
             <tbody>
@@ -158,7 +157,7 @@
                     <td> <?= $user_account['lastName']; ?> </td>
                     <td> <?= $user_account['username']; ?> </td>
                     <td>
-                        <a href = "<?php deleteUser(); ?>">Delete</a>
+                    <a href="includes/deleteUser.php?userID=<?=$row['userID'];?>" >Delete</a>
                     </td>
                 </tr>
                 
@@ -178,11 +177,6 @@
 
         function deleteUser(){
 
-        }
-
-        function deleteEvents($eventID, $connection){
-            $sql="DELETE FROM tblevents WHERE eventID='$eventID'";
-            $all_admin = mysqli_query($connection,$sql);
         }
     ?>
 </body>

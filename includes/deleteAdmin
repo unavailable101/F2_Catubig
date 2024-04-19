@@ -1,0 +1,6 @@
+<?php
+    include ('../connect.php');
+    $sql="DELETE FROM tbladminaccount WHERE adminID='".$_GET['adminID']."'";
+    mysqli_query($connection,$sql);
+    header("location: ../index.php");
+?>

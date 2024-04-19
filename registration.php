@@ -1,5 +1,4 @@
 <?php
-    session_start();
 	include 'connect.php';
 
     // error_reporting(E_ALL);
@@ -139,9 +138,10 @@
                 }
 
                 // Insert into tbladminaccount
-                $sql_adminInsert ="INSERT INTO tbladminaccount (organizationID, accountID) VALUES (?, ?)";
+                $adminStat = -1;
+                $sql_adminInsert ="INSERT INTO tbladminaccount (organizationID, accountID, adminStatusID) VALUES (?, ?, ?)";
                 $stmt_adminInsert = $connection->prepare($sql_adminInsert);
-                $stmt_adminInsert->bind_param("ii", $orgID, $accountID);
+                $stmt_adminInsert->bind_param("iii", $orgID, $accountID, $adminStat);
                 $stmt_adminInsert->execute();
                 $adminID = $connection->insert_id;
 
