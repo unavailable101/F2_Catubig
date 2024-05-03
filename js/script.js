@@ -20,9 +20,14 @@ $(document).on('click', '.btn-remove', function(e){
     $(row).remove();
 });
 
-// $(document).on('click', '.submit-changes', function(e){
-//     e.preventDefault();
-//     $.ajax({
-//         url: 'profile-update.php'
-//     });
-// });
+$("#update-profile").submit(function(e){
+    e.preventDefault();
+    $.ajax({
+        url: '../includes/org-update.php',
+        method: 'post',
+        data: $(this).serialize(),
+        success: function(response){
+            console.log(response);
+        }
+    })
+});

@@ -121,6 +121,7 @@ body{
 }
 .table td{
     background: #B3C8CF;
+    color: black;
 }
 .table td a {
     text-decoration: none;

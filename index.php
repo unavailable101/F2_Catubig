@@ -22,8 +22,8 @@
                     <a href="create-event.php">
                         <span>Create Event</span>
                     </a>
-                    <a href="#">
-                        <span>Your Events</span>
+                    <a href="report-link.php">
+                        <span>Report</span>
                     </a>
                 </div>
                 ';
