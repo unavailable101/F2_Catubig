@@ -1,12 +1,11 @@
 <?php
 	include 'connect.php';
-
+    
     // error_reporting(E_ALL);
     // ini_set('display_errors', 1);
-?>  
+    ?>  
 <body>
     <link href="css/register-style.css" type="text/css" rel="stylesheet"/>
-    <link href="css/common-style.css" type="text/css" rel="stylesheet"/>
 
     <center>
         <img class="logo-big" src="images/logo-1.png"/>
@@ -70,6 +69,7 @@
                     </div>
                 </div>
             </div>
+            <div id="exist"></div>
             <button class="register-btn" name="sign-up" type="submit" onclick="console.log('Button clicked');">
                 <span></span>
                 <span></span>
@@ -85,6 +85,7 @@
         </span>
     </div>
 </body>
+
 <?php
     if(isset($_POST['sign-up'])){
         
@@ -160,6 +161,12 @@
                 $stmt_updateAdminStatus->bind_param("ii", $adminStatusID, $adminID);
                 $stmt_updateAdminStatus->execute();
 
+                //Insert into tbladminorganization
+                $sql_adminOrg = "INSERT INTO tbladminorganization (adminID, organizationID) VALUES (?, ?)";
+                $statement_adminOrg = $connection->prepare($sql_adminOrg);
+                $statement_adminOrg->bind_param("ii", $adminID, $orgID);
+                $statement_adminOrg->execute();
+
                 // Set session variables
                 $_SESSION['isAdmin'] = true;
                 $_SESSION['adminID'] = $adminID;
@@ -174,9 +181,9 @@
             
                 // Insert into tbladminstatus
                 $isAdmin = false;
-                $sql_adminStatus = "INSERT INTO tbladminstatus (isAdmin) VALUES (?)";
+                $sql_adminStatus = "INSERT INTO tbladminstatus (isAdmin, accountID) VALUES (?, ?)";
                 $stmt_adminStatus = $connection->prepare($sql_adminStatus);
-                $stmt_adminStatus->bind_param("i", $isAdmin);
+                $stmt_adminStatus->bind_param("ii", $isAdmin, $accountID);
                 $stmt_adminStatus->execute();
                 $adminStatusID = $connection->insert_id;
             
@@ -187,15 +194,21 @@
                 $stmt_updateAdminStatus->execute();
             
                 $_SESSION['isAdmin'] = false;
-                $_SESSION['adminID'] = $userID;
+                $_SESSION['userID'] = $userID;
                 $_SESSION['username'] = $username;
             }
             
-            header("location: index.php");
+            header ("location: index.php");
         } else {
-            echo "<script>alert('Username or Email Address already exists');</script>";
+            // echo "<script>alert('Username or Email Address already exists');</script>";
+            echo 
+            "<script>
+                var x = document.getElementById('exist');
+                x.innerHTML = '*Username or Email Already Exist';
+            </script>";
+            ;
         }
     } else {
-    echo "<script>alert('Form not submitted');</script>";
+    // echo "<script>alert('Form not submitted');</script>";
     }
 ?>

@@ -6,7 +6,7 @@
 		<a href="index.php">
 			<span class="nav-item">Home</span>
 		</a>
-		<a href="#">
+		<a href="events.php">
 			<span class="nav-item">Events</span>
 		</a>
 		<?php
@@ -21,7 +21,7 @@
 				';
 			} else {
 				echo '
-				<a href="#">
+				<a href="profile.php">
 					<span class="nav-item">Profile</span>
 				</a>
 				<a href="logout.php">

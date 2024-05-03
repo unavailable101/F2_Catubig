@@ -1,11 +1,12 @@
-<link href="css/common-style.css" type="text/css" rel="stylesheet">
+<?php
+    include 'connect.php';
+?>
 <link href="css/create-event.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <body>
     <?php
     	include('includes/header.php');
-    	include 'connect.php';
     ?>
     <div class="main">
 

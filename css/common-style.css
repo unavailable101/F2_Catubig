@@ -2,7 +2,19 @@ body{
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    background-image: url("../images/3161300.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    /* linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)),  */
 }
+
+#exist{
+    margin-top: 10px;
+    color: #f00;
+    font-size: small;
+}
+
 /* for logo in login and register */
 .logo-big{
     /* actual style for the logo */
@@ -64,23 +76,34 @@ body{
 .main{
     position: relative;
     min-height: 100vh;
+    padding: 2% 5%;
 }
 
-.for-admin{
-    padding: 20px;
+/* .for-admin{ */
+    /* padding: 20px; */
     /* border: 1px solid black; */
-}
+/* } */
 
 .for-admin a{
-    color: black;
+    color: #fff;
     text-decoration: none;
 }
 
 .for-admin a span{
-    border: 1px solid black;
+    border: 1px solid #fff;
     padding: 10px;
-    margin: 0 10px;
+    /* margin: 0 10px; */
+    border-radius: 2px;
+    transition: .5s;
 }
+
+.for-admin a span:hover{
+    background-color: white;
+    color: black;
+    transition: .5s;
+}
+
+
 
 /* the table part which will only be seen by the user */
 /* temp kay for submission purposes only */

@@ -7,7 +7,6 @@
 
 <body>
     <link href="css/login-style.css" type="text/css" rel="stylesheet" />
-    <link href="css/common-style.css" type="text/css" rel="stylesheet" />
 
     <center>
         <img class="logo-big" src="images/logo-1.png">
@@ -27,6 +26,9 @@
                     Forgot Password?
                 </a>
             </div>
+        
+            <div id="exist"></div>
+
             <button class="login-btn" name="login" type="submit">
                 <!-- for effect ning mga span mamsh ha -->
                 <span></span>
@@ -70,37 +72,36 @@
             ";
         } else {
             if ( password_verify($pwd, $account_row['password'] ) ){
-                
-                $sql_adminStat ="Select * from tbladminstatus where accountID='".$account_row['accountID']."'";
-                $result_stat = mysqli_query($connection,$sql_adminStat);
-                $isExist = mysqli_num_rows($result_stat);
-                
-                if ($isExist != 0){
-                    $row_stat = mysqli_fetch_array($result_stat);
+                $query1 = "SELECT isAdmin from tbladminstatus WHERE accountID=?";
+                $statement1 = $connection->prepare($query1);
+                $statement1->bind_param("s", $account_row['accountID']);
+                $statement1->execute();
+                $res1 = $statement1->get_result();
+                $isExist = $res1->fetch_array();
+
+                if ($isExist['isAdmin']){                    
+                    $query_admin = "SELECT adminID FROM tbladminaccount WHERE accountID=?";
+                    $statement_admin = $connection->prepare($query_admin);
+                    $statement_admin->bind_param("s", $account_row['accountID']);
+                    $statement_admin->execute();
+                    $res_admin = $statement_admin->get_result();
+                    $admin_row = $res_admin->fetch_array();
                     
-                    $sql_admin ="Select * from tbladminaccount where adminID='".$row_stat['adminStatusID']."'";
-                    $result_admin = mysqli_query($connection,$sql_admin);
-                    $isAdminExist = mysqli_num_rows($result_admin);
-                    
-                    if ($isAdminExist!=0){
-                        $admin_row = mysqli_fetch_array($result_admin);
-                        
-                        $_SESSION['isAdmin']=true;
-                        $_SESSION['adminID']=$admin_row['adminID'];
-                        $_SESSION['username']=$account_row['username'];
-                    }
+                    $_SESSION['isAdmin']=true;
+                    $_SESSION['adminID']=$admin_row['adminID'];
+                    $_SESSION['username']=$account_row['username'];
                 } else {
-                    $sql_user ="Select * from tbluseraccount where accountID='".$account_row['accountID']."'";
-                    $result_user = mysqli_query($connection,$sql_user);
-                    $isUserExist = mysqli_num_rows($result_user);
                     
-                    if ($isUserExist != 0){
-                        $user_row = mysqli_fetch_array($result_user);
+                    $query_user = "SELECT userID FROM tbluseraccount WHERE accountID=?";
+                    $statement_user = $connection->prepare($query_user);
+                    $statement_user->bind_param("s", $account_row['accountID']);
+                    $statement_user->execute();
+                    $res_user = $statement_user->get_result();
+                    $user_row = $res_user->fetch_array();
                         
-                        $_SESSION['isAdmin']=false;
-                        $_SESSION['userID']=$user_row['userID'];
-                        $_SESSION['username']=$account_row['username'];
-                    }
+                    $_SESSION['isAdmin']=false;
+                    $_SESSION['userID']=$user_row['userID'];
+                    $_SESSION['username']=$account_row['username'];
                 }
 
                 header("location: index.php");

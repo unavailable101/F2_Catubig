@@ -2,13 +2,8 @@
 	include 'connect.php';
 ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>CONquest: Event Planner</title>
-    <link href="css/common-style.css" type="text/css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-</head>
 <body>
     <?php
     	include('includes/header.php');
@@ -93,7 +88,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
-                    <!-- <th></th> -->
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -112,7 +107,7 @@
                     <td> <?= $admin_account['lastName']; ?> </td>
                     <td> <?= $admin_account['username']; ?> </td>
                     <td>
-                        <a href="includes/deleteAdmin.php?adminID=<?=$row['adminID'];?>" >Delete</a>
+                        <a href="includes/deleteAdmin.php?adminID=<?=$row['accountID'];?>" >Delete</a>
                     </td>
                     
                 </tr>
@@ -138,7 +133,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
-                    <!-- <th></th> -->
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -157,7 +152,7 @@
                     <td> <?= $user_account['lastName']; ?> </td>
                     <td> <?= $user_account['username']; ?> </td>
                     <td>
-                    <a href="includes/deleteUser.php?userID=<?=$row['userID'];?>" >Delete</a>
+                    <a href="includes/deleteUser.php?userID=<?=$row['accountID'];?>" >Delete</a>
                     </td>
                 </tr>
                 
@@ -170,13 +165,5 @@
 
     <?php
     	include('includes/footer.php');
-
-        function deleteAdmin(){
-
-        }
-
-        function deleteUser(){
-
-        }
     ?>
 </body>

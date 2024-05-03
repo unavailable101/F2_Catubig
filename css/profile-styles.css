@@ -1,0 +1,211 @@
+.main{
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid white; */
+}
+
+.profile, .more-info{
+    width: 100%;
+    /* border: 1px solid white; */
+}
+.profile{
+    width: max-content;
+}
+
+.more-info{
+    padding: 50px 75px;
+}
+
+.more-info .content{
+    background: black;
+    width: auto;
+    height: 100%;
+    /* border: 1px solid white; */
+}
+
+.overview{
+    /* border: 1px solid blue; */
+    height: 100%;
+    display: block;
+}
+
+.overview hr{
+    margin: 20px 0;
+}
+
+#top-events, #upcoming-events{
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.literal-overview{
+    display: flex;
+    flex-direction: row;
+}
+
+.list-top-events{
+    /* border: 1px solid white; */
+    padding: 20px;
+}
+
+.list-top-events .event-pic{
+    position: relative;
+    padding: 10px;
+}
+
+.event-pic img{
+    width: 100%;
+    align-self: center;
+    height: 100px;
+    object-fit: cover;
+}
+
+.list-top-events .event-pic .event-name{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    background: rgba(0,0,0,0.7);;
+    padding: 5px 0;
+    /* border: 1px solid black; */
+}
+
+.event-name div{
+    text-align: center;
+    /* color: black; */
+}
+
+.event-name div:nth-child(1){
+    font-size: x-large;
+}
+.event-name div:nth-child(2){
+    font-size: small;
+}
+
+
+.most-event, .total-events{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.most-event span, .total-events span{
+    padding: 5px;
+}
+
+.most-event span:nth-child(1), .total-events span:nth-child(1){
+    font-size:x-large;
+}
+.most-event span:nth-child(2), .total-events span:nth-child(2){
+    font-size: smaller;
+}
+
+.admin-events{
+    /* border: 1px solid red; */
+    height: 100px;
+    display: none;
+}
+
+.overview, .admin-events{
+    margin: 0 5%;
+    transition: .3s;
+}
+
+.inner-bar{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid white;
+}
+
+.inner-bar div{
+    width: 50%;
+    text-align: center;
+    padding: 15px;
+    transition: 1s;
+}
+
+/* .inner-bar div:nth-child(1), .inner-bar div:nth-child(2){ */
+.active{
+    background: linear-gradient(180deg, black, #03e9f4);
+}
+
+.inner-bar div:hover{
+    background: linear-gradient(180deg, black, #03e9f4);
+    transition: 1s;
+    cursor: pointer;
+}
+
+/* .inner-bar .line{
+    border: 0 1px solid white;
+    width: 0px;
+} */
+
+.pfp-container{
+    margin: 20px 20px 10px;
+    width: fit-content;
+    /* border: 1px solid white; */
+}
+.pfp,
+.pfp-pic{
+    position: relative;
+    width: fit-content;
+}
+
+.pfp-pic .pic{
+    border-radius: 50%;
+    height: 270px; 
+    width: 270px;
+    border: 10px solid black;
+}
+
+.pfp-border{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-48%, -50%);
+}
+
+.pfp-border .border{
+    height: 400px;
+    width: 400px;
+}
+
+.edit{
+    position: relative;
+    top: 100%;
+    left: 100%;
+    transform: translate(-125%, -150%);
+    width: fit-content;
+    background: white;
+    border-radius: 50%;
+    transition: .3s;
+    /* border: 1px solid white; */
+}
+
+.edit img{
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+}
+
+.edit:hover{ 
+    background-color: #03e9f4;
+    box-shadow: 0px 0px 20px white;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.name, .username{
+    /* border: 1px solid white; */
+    text-align: center;
+    background-color: black;
+}
+
+.name{
+    font-size: xx-large;
+}
+.username{
+    font-size: larger;
+}
