@@ -107,18 +107,28 @@
                             <div class="total-events">
                                 <?php
                                     if ($_SESSION['isAdmin']){
+                                        $statement_getTotalCreate = $connection->prepare("SELECT COUNT(eventID) AS TotalCreate FROM tblevents WHERE adminID=?");
+                                        $statement_getTotalCreate->bind_param("i", $_SESSION['adminID']);
+                                        $statement_getTotalCreate->execute();
+                                        $total_create = $statement_getTotalCreate->get_result()->fetch_column();
+
                                         echo '
                                             <span>
-                                                10000
+                                                '.$total_create.'
                                             </span>
                                             <span>
                                                 Total Events
                                             </span>
                                         ';
                                     } else {
+                                        $statement_totalJoin = $connection->prepare("SELECT COUNT(id) AS TotalJoin FROM tbluserevents WHERE userID=?");
+                                        $statement_totalJoin->bind_param("i", $_SESSION['userID']);
+                                        $statement_totalJoin->execute();
+                                        $total_join = $statement_totalJoin->get_result()->fetch_column();
+
                                         echo '
                                             <span>
-                                                10000
+                                                '.$total_join.'
                                             </span>
                                             <span>
                                                 Total Joined Events
@@ -172,29 +182,23 @@
                     </div>
                     <div class="admin-events">
                     <div class="list-top-events">
-                            <div class="event-pic">
-                                <img src="images/3 (2).jpg">
-                                <div class="event-name">
-                                    <div>Kiro</div>
-                                    <div>da hacker</div>
-                                </div>
-                            </div>
-                            <div class="event-pic">
-                                <img src="images/3 (4).jpg">
-                                <div class="event-name">
-                                    <div>Gavin</div>
-                                    <div>gwapo</div>
-                                </div>
-                            </div>
-                            <div class="event-pic">
-                                <img src="images/274000211_507612747391631_804088690670275201_n.jpg">
-                                <div class="event-name">
-                                    <div>MAMAA</div>
-                                    <div>ang pagkikita</div>
-                                </div>
-                            </div>
+                        <?php
+                            $statement_adminEvents = $connection->prepare("SELECT eventName, eventType, image FROM tblevents WHERE adminID=?");
+                            $statement_adminEvents->bind_param("i", $_SESSION['adminID']);
+                            $statement_adminEvents->execute();
+                            $res_adminEvents = $statement_adminEvents->get_result();
 
-                        </div>
+                            while($e = $res_adminEvents->fetch_assoc()):
+                        ?>
+                            <div class="event-pic">
+                                <img src="images/events/<?=$e['image'];?>">
+                                <div class="event-name">
+                                    <div><?=$e['eventName'];?></div>
+                                    <div><?=$e['eventType'];?></div>
+                                </div>
+                            </div>
+                            <?php endwhile; ?>
+                    </div>
                     </div>
                 </div>
         </div>

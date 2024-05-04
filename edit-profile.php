@@ -5,6 +5,9 @@
     // ini_set('display_errors', 1);
 ?>
 
+<!-- goals: 
+    maka change nag profile pic ang user/admin -->
+
 <link rel="stylesheet" type="text/css" href="css/profile-styles.css">
 <link rel="stylesheet" type="text/css" href="css/profile-settings-styles.css">
 
@@ -40,7 +43,7 @@
                     <!-- end pfp -->
                     </div>
                     <label for="update-image">Update Picture</label>
-                    <input type="file" accept="image/jpeg, image/png, image/jpg"  name="update-image" id="update-image">
+                    <input type="file" accept="image/jpeg, image/png, image/jpg" name="update-image" id="update-image">
 
                     <script src="js/profile-pic.js"></script>
 
@@ -94,7 +97,21 @@
                                                     <input class="typing" type="text" name="org[]" >
                                                     <input type="button" class="btn-add" value="Add">
                                                 </div>
-                                                <input class="typing hidden" >
+                                                '?>
+                                                <?php
+                                                    $statement_getAdminOrgs = $connection->prepare("SELECT organizationName FROM tblorganization, tbladminorganization WHERE tbladminorganization.adminID=? AND tblorganization.organizationID=tbladminorganization.organizationID");
+                                                    $statement_getAdminOrgs->bind_param("i", $_SESSION['adminID']);
+                                                    $statement_getAdminOrgs->execute();
+                                                    $res = $statement_getAdminOrgs->get_result();
+
+                                                    while ($org = $res->fetch_assoc()):
+                                                ?>    
+                                                <input class="typing" type="text" value="<?=$org['organizationName'];?>" disabled>
+                                                <?php
+                                                    endwhile;
+                                                ?>
+                                                <?php 
+                                                echo '<input class="typing hidden" >
                                                 <label class="label-input">Organization</label>
                                             </div>
                                         </div>

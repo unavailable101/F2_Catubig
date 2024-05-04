@@ -20,24 +20,32 @@
             $statement_common->execute();
         }
 
-        $statement_getAdmin = $connection->prepare("SELECT adminID FROM tbladminaccount WHERE accountID=?");
-        $statement_getAdmin->bind_param("i", $_GET['accountID']);
-        $statement_getAdmin->execute();
-        $the_admin = $statement_getAdmin->get_result()->fetch_column();
-
-        foreach($POST['org'] as $key => $value){
-            $statement_addOrg = $connection->prepare("INSERT INTO tblorganization (organizationName) VALUES ( :organizationName )");
-            // $statement_addOrg->bind_param("s", $value);
-            $statement_addOrg->execute([
-                'organizationName' => $value
-            ]);
-            $orgID = $connection->insert_id;
-            $statement_adminOrg = $connection->prepare("INSERT INTO tbladminorganization (adminID, organizationID) VALUES (?,?)");
-            $statement_adminOrg->bind_param("ii", $the_admin, $orgID);
-            $statement_adminOrg->execute();
+        
+        if (isset($_POST['org']) && is_array($_POST['org'])) {
+            try {
+                $statement_getAdmin = $connection->prepare("SELECT adminID FROM tbladminaccount WHERE accountID=?");
+                $statement_getAdmin->bind_param("i", $_GET['accountID']);
+                $statement_getAdmin->execute();
+                $the_admin = $statement_getAdmin->get_result()->fetch_column();
+    
+                $statement_addOrg = $connection->prepare("INSERT INTO tblorganization (organizationName) VALUES (?)");
+                $statement_adminOrg = $connection->prepare("INSERT INTO tbladminorganization (adminID, organizationID) VALUES (?, ?)");
+    
+                foreach ($_POST['org'] as $value) {
+                    $statement_addOrg->bind_param("s", $value);
+                    $statement_addOrg->execute();
+                    $orgID = $connection->insert_id;
+    
+                    $statement_adminOrg->bind_param("ii", $the_admin, $orgID);
+                    $statement_adminOrg->execute();
+                }
+    
+                $connection->commit();
+                echo '<script>console.log("Organizations added successfully!");</script>';
+            } catch (Exception $e) {
+                $connection->rollback();
+            }
         }
-        echo 'Added orgz successfully!';
-
         header("location: ../profile.php");
     }
 ?>

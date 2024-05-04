@@ -1,0 +1,108 @@
+.for-events{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* border: 1px solid wheat; */
+}
+
+.for-events .event-container{
+    width: 390px;
+    height: 225px;
+    margin-bottom: 20px;
+    background-color: aliceblue;
+    /* border: 1px solid wheat;  */
+}
+
+.event-container .event-bg{
+    position: relative;
+    width: 390px;
+    height: 225px;
+    /* border: 1px solid blue; */
+}
+
+.event-bg img{
+    mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0.05) 40%,  rgba(255,255,255,0) 100%);
+    width: 390px;
+    height: 225px;
+}
+.event-infos{
+    /* border: 1px solid black; */
+    position: absolute;
+    bottom: 0;
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%);  */
+    color: black;
+    width: 100%;
+    height: 60%;
+}
+
+.event-infos .the-event{
+    text-align: center;
+    height: 50%;
+    /* border: 1px solid blueviolet; */
+}
+
+.event-infos .the-event:nth-child(1){
+    align-content: center;
+    font-size: xx-large;
+    border-bottom: 1px dashed black;
+}
+
+.event-infos .the-event:nth-child(2){
+    display: flex;
+    flex-direction: row;
+}
+
+.the-event .event-details{
+    width: 100%;
+    padding: 10px 10px 0;
+    text-align: left;
+    position: relative;
+    /* border: 1px solid brown; */
+}
+
+.event-details div{
+    /* border: 1px solid black; */
+    padding: 1px 5px;
+}
+
+.event-details span{
+    margin-bottom: 10px;
+}
+
+.event-details .not-joined{
+    position: absolute;
+    background: black;
+    color: aliceblue;
+    border: none;
+    /* margin-top: 100px; */
+    padding: 5px 25px;
+    /* width: 175px; */
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: small;
+    cursor: pointer;
+    bottom: 10;
+    transition: .5s;
+}
+
+.event-details .not-joined:hover{
+    background: white;
+    color: black;
+    box-shadow: 0px 0px 25px 5px #000000;
+    transition: .5s;
+}
+
+.event-details .has-joined{
+    position: absolute;
+    background: black;
+    color: aliceblue;
+    border: none;
+    padding: 5px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: small;
+    bottom: 10;
+}

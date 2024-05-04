@@ -20,14 +20,14 @@ $(document).on('click', '.btn-remove', function(e){
     $(row).remove();
 });
 
-$("#update-profile").submit(function(e){
-    e.preventDefault();
-    $.ajax({
-        url: '../includes/org-update.php',
-        method: 'post',
-        data: $(this).serialize(),
-        success: function(response){
-            console.log(response);
-        }
-    })
-});
+// $("#update-profile").submit(function(e){
+//     e.preventDefault();
+//     $.ajax({
+//         url: '../includes/org-update.php',
+//         method: 'post',
+//         data: $(this).serialize(),
+//         success: function(response){
+//             console.log(response);
+//         }
+//     })
+// });
