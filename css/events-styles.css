@@ -26,6 +26,16 @@
     width: 390px;
     height: 225px;
 }
+
+.view-details{
+    position: absolute;
+    top: 10;
+    left: 10;
+    color: white;
+    text-decoration: none;
+    text-shadow: 0 0 10px #000000, 1px 1px 20px #0000;
+}
+
 .event-infos{
     /* border: 1px solid black; */
     position: absolute;

@@ -36,7 +36,7 @@
                     return $res->num_rows > 0;
                 }
 
-                $Statement_allEvents = $connection->prepare("SELECT eventID, eventName, eventType, date, time, image FROM tblevents");
+                $Statement_allEvents = $connection->prepare("SELECT eventID, eventName, eventType, date, time, image FROM tblevents ORDER BY eventID DESC");
                 $Statement_allEvents->execute();
                 $res = $Statement_allEvents->get_result();
     
@@ -46,6 +46,7 @@
             <div class="event-container">
                 <div class="event-bg">
                     <img src = "images/events/<?=$e['image'];?>">
+                    <a class="view-details" href="event-details.php?eventID=<?=$e['eventID'];?>">View Details</a>
                     <div class="event-infos">
                         <div class="the-event">
                             <?=$e['eventName'];?>
@@ -76,8 +77,8 @@
                                 ?>
                             </div>
                             <div class="event-details">
-                                <div>Date: <?=$e['date'];?></div>
-                                <div>Time:  <?=$e['time'];?></div>
+                                <div>Date: <?= date('d M Y',strtotime($e['date']));?></div>
+                                <div>Time:  <?= date('h:i A', strtotime($e['time']));?></div>
                             </div>
                         </div>
                     </div>

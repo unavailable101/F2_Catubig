@@ -43,6 +43,43 @@
             <?php endwhile;?>        
             </tbody>
         </table>
+
+        <?php
+            $ctr = 1;   
+            $sql_totalevents ="SELECT tblaccount.firstName, tblaccount.lastName, COUNT(tblevents.eventID) AS Total 
+                                FROM tblaccount 
+                                INNER JOIN tbladminaccount ON tblaccount.accountID = tbladminaccount.accountID 
+                                LEFT JOIN tblevents ON tbladminaccount.adminID = tblevents.adminID 
+                                GROUP BY tblaccount.firstName, tblaccount.lastName";
+            $totalevents_result = mysqli_query($connection,$sql_totalevents);
+        ?>
+        <table class="table" cellspacing="1" width="75%">
+            <center>
+                <h1> Admin-Events </h1>
+            </center>
+            <thead>
+                <tr>
+                    <th>Seq. No.</th>
+                    <th>Admin Name</th>
+                    <th>Total Number of Created Events</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php 
+                    while($te = $totalevents_result->fetch_assoc()): 
+                ?>
+            
+                <tr>
+                    <td> <?= $ctr++; ?> </td>
+                    <td> <?= $te['firstName']. ' ' .$te['lastName'] ; ?> </td>
+                    <td> <?= isset($te['Total']) ? $te['Total'] : 0; ?> </td>
+                </tr>
+                
+            <?php endwhile;?>        
+            </tbody>
+        </table>
+
     </div>
     <?php
     	include('includes/footer.php');
