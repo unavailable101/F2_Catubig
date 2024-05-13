@@ -163,7 +163,7 @@
                             
                             <?php
                                 if ($_SESSION['isAdmin']){
-                                    $statement_topevents = $connection->prepare("SELECT tblevents.eventID, eventName, eventType, image, COUNT(tbluserevents.eventID) AS total_join 
+                                    $statement_topevents = $connection->prepare("SELECT tblevents.eventID, eventName, eventType, image, isDelete, COUNT(tbluserevents.eventID) AS total_join 
                                                                                     FROM tblevents, tbluserevents
                                                                                     WHERE tblevents.adminID=? AND tblevents.date >= CURDATE() AND tbluserevents.eventID=tblevents.eventID
                                                                                     GROUP BY tbluserevents.eventID
@@ -172,58 +172,62 @@
                                     $statement_topevents->bind_param("i", $_SESSION['adminID']);
                                     $statement_topevents->execute();
                                     $res_topevents = $statement_topevents->get_result();
-
+                                    
                                     for ($i = 1; $i<=3 && $te = $res_topevents->fetch_assoc(); $i++){
-                                        echo '    
-                                            <a href="event-details.php?eventID='.$te['eventID'].'">                                        
-                                                <div class="event-content">
-                                                    <div class="count">
-                                                        <div>
-                                                            <div>#'.$i.'</div>
-                                                            <div>'.$te['total_join'].' Joined</div>
+                                        if (!$te['isDelete']){
+                                            echo '    
+                                                <a href="event-details.php?eventID='.$te['eventID'].'">                                        
+                                                    <div class="event-content">
+                                                        <div class="count">
+                                                            <div>
+                                                                <div>#'.$i.'</div>
+                                                                <div>'.$te['total_join'].' Joined</div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="event-pic">
+                                                            <img src="images/events/'.$te['image'].'">
+                                                            <div class="event-name">
+                                                                <div>'.$te['eventName'].'</div>
+                                                                <div>'.$te['eventType'].'</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="event-pic">
-                                                        <img src="images/events/'.$te['image'].'">
-                                                        <div class="event-name">
-                                                            <div>'.$te['eventName'].'</div>
-                                                            <div>'.$te['eventType'].'</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        ';
+                                                </a>
+                                            ';
+                                        }
                                     }
 
                                 } else {
-                                    $statement_upcoming_events = $connection->prepare("SELECT tblevents.eventID, eventName, eventType, date, time, image FROM tblevents INNER JOIN tbluserevents ON tblevents.eventID=tbluserevents.eventID AND tbluserevents.userID=? AND tblevents.date >= CURDATE() ORDER BY tblevents.date ASC, tblevents.time ASC");
+                                    $statement_upcoming_events = $connection->prepare("SELECT tblevents.eventID, eventName, eventType, date, time, image, isDelete FROM tblevents INNER JOIN tbluserevents ON tblevents.eventID=tbluserevents.eventID AND tbluserevents.userID=? AND tblevents.date >= CURDATE() ORDER BY tblevents.date ASC, tblevents.time ASC");
                                     $statement_upcoming_events->bind_param("i", $_SESSION['userID']);
                                     $statement_upcoming_events->execute();
                                     $res_upEvents = $statement_upcoming_events->get_result();
 
                                     while( $ue = $res_upEvents->fetch_assoc() ){
-                                        echo '    
-                                            <a href="event-details.php?eventID='.$ue['eventID'].'">
-                                                <div class="event-content">
-                                                    <div class="date-time">
-                                                        <div>
-                                                            <div>'.date('d M', strtotime($ue['date'])).'</font></div>
-                                                            <div>'.date('h:i A', strtotime($ue['time'])).'</div>
+                                        if (!$ue['isDelete']){
+                                            echo '    
+                                                <a href="event-details.php?eventID='.$ue['eventID'].'">
+                                                    <div class="event-content">
+                                                        <div class="date-time">
+                                                            <div>
+                                                                <div>'.date('d M', strtotime($ue['date'])).'</font></div>
+                                                                <div>'.date('h:i A', strtotime($ue['time'])).'</div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="event-pic">
+                                                            <img src="images/events/'.$ue['image'].'">
+                                                            <div class="event-name">
+                                                                <div>'.$ue['eventName'].'</div>
+                                                                <div>'.$ue['eventType'].'</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="event-pic">
-                                                        <img src="images/events/'.$ue['image'].'">
-                                                        <div class="event-name">
-                                                            <div>'.$ue['eventName'].'</div>
-                                                            <div>'.$ue['eventType'].'</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                                
-                                        ';
+                                                </a>
+                                                    
+                                            ';
+                                        }
                                     }
                                 }
                             ?>
@@ -257,7 +261,7 @@
                                         <div class="delete-update">
                                             <div>
                                                 <a href="includes/deleteEvents.php?eventID='.$e['eventID'].'">
-                                                    DELETE
+                                                    CANCEL
                                                 </a>
                                                 <a href="edit-event.php?eventID='.$e['eventID'].'">
                                                     UPDATE

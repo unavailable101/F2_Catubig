@@ -63,6 +63,7 @@
 }
 
 .info-events input,
+.info-events select,
 .info-events textarea{
     padding: 8px;
     border: 1px solid #ccc;

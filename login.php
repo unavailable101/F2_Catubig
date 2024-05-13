@@ -71,48 +71,50 @@
             </script>
             ";
         } else {
-            if ( password_verify($pwd, $account_row['password'] ) ){
-                $query1 = "SELECT isAdmin from tbladminstatus WHERE accountID=?";
-                $statement1 = $connection->prepare($query1);
-                $statement1->bind_param("s", $account_row['accountID']);
-                $statement1->execute();
-                $res1 = $statement1->get_result();
-                $isExist = $res1->fetch_array();
-
-                if ($isExist['isAdmin']){                    
-                    $query_admin = "SELECT adminID FROM tbladminaccount WHERE accountID=?";
-                    $statement_admin = $connection->prepare($query_admin);
-                    $statement_admin->bind_param("s", $account_row['accountID']);
-                    $statement_admin->execute();
-                    $res_admin = $statement_admin->get_result();
-                    $admin_row = $res_admin->fetch_array();
-                    
-                    $_SESSION['isAdmin']=true;
-                    $_SESSION['adminID']=$admin_row['adminID'];
-                    $_SESSION['username']=$account_row['username'];
-                } else {
-                    
-                    $query_user = "SELECT userID FROM tbluseraccount WHERE accountID=?";
-                    $statement_user = $connection->prepare($query_user);
-                    $statement_user->bind_param("s", $account_row['accountID']);
-                    $statement_user->execute();
-                    $res_user = $statement_user->get_result();
-                    $user_row = $res_user->fetch_array();
+            if (!$account_row['isDelete']){
+                if ( password_verify($pwd, $account_row['password'] ) ){
+                    $query1 = "SELECT isAdmin from tbladminstatus WHERE accountID=?";
+                    $statement1 = $connection->prepare($query1);
+                    $statement1->bind_param("s", $account_row['accountID']);
+                    $statement1->execute();
+                    $res1 = $statement1->get_result();
+                    $isExist = $res1->fetch_array();
+    
+                    if ($isExist['isAdmin']){                    
+                        $query_admin = "SELECT adminID FROM tbladminaccount WHERE accountID=?";
+                        $statement_admin = $connection->prepare($query_admin);
+                        $statement_admin->bind_param("s", $account_row['accountID']);
+                        $statement_admin->execute();
+                        $res_admin = $statement_admin->get_result();
+                        $admin_row = $res_admin->fetch_array();
                         
-                    $_SESSION['isAdmin']=false;
-                    $_SESSION['userID']=$user_row['userID'];
-                    $_SESSION['username']=$account_row['username'];
+                        $_SESSION['isAdmin']=true;
+                        $_SESSION['adminID']=$admin_row['adminID'];
+                        $_SESSION['username']=$account_row['username'];
+                    } else {
+                        
+                        $query_user = "SELECT userID FROM tbluseraccount WHERE accountID=?";
+                        $statement_user = $connection->prepare($query_user);
+                        $statement_user->bind_param("s", $account_row['accountID']);
+                        $statement_user->execute();
+                        $res_user = $statement_user->get_result();
+                        $user_row = $res_user->fetch_array();
+                            
+                        $_SESSION['isAdmin']=false;
+                        $_SESSION['userID']=$user_row['userID'];
+                        $_SESSION['username']=$account_row['username'];
+                    }
+    
+                    header("location: index.php");
+                } else {
+                    // echo "<script language='javascript'>
+                    //         alert('Incorrect password');
+                    //     </script>";
+                    echo "<script>
+                            var x = document.getElementById('exist');
+                            x.innerHTML = '*Incorrect password';
+                        </script>";
                 }
-
-                header("location: index.php");
-            } else {
-                // echo "<script language='javascript'>
-                //         alert('Incorrect password');
-                //     </script>";
-                echo "<script>
-                        var x = document.getElementById('exist');
-                        x.innerHTML = '*Incorrect password';
-                    </script>";
             }
         }
     }

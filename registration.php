@@ -98,6 +98,7 @@
         $email=$_POST['email'];
         $pword=$_POST['password'];
         $account_type=$_POST['accountType'];
+        $delete = false;
 
         //hash password
         $hash_pword = password_hash($pword,PASSWORD_BCRYPT);
@@ -112,9 +113,9 @@
 
         if($row == 0){
         // Insert into tblaccount
-        $sql_account ="INSERT INTO tblaccount (firstName, lastName, username, age, gender, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql_account ="INSERT INTO tblaccount (firstName, lastName, username, age, gender, email, password, isDelete) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt_account = $connection->prepare($sql_account);
-        $stmt_account->bind_param("sssssss", $fname, $lname, $username, $age, $gender, $email, $hash_pword);
+        $stmt_account->bind_param("sssssssi", $fname, $lname, $username, $age, $gender, $email, $hash_pword, $delete);
         $stmt_account->execute();
         $accountID = $stmt_account->insert_id;
 

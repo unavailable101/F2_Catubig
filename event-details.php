@@ -60,23 +60,25 @@
             </div>
             <div class="more-details">
                 <?php
-                    $statement_check = $connection->prepare("SELECT COUNT(id) AS naa FROM tbluserevents WHERE eventID=? AND userID=?");
-                    $statement_check->bind_param("ii", $_GET['eventID'], $_SESSION['userID']);
-                    $statement_check->execute();
-                    $res = $statement_check->get_result()->fetch_column();
-                    
-                    if (!$res){
-                        echo ' 
-                            <a class="wala" href="includes/joinEvent.php?eventID='.$e['eventID'].'&userID='.$_SESSION['userID'].'">
-                                Join Event!
-                            </a>      
-                        ';
-                    } else {
-                        echo ' 
-                            <a class="naa">
-                                Already Joined Event
-                            </a>      
-                        ';
+                    if (!$_SESSION['isAdmin']){
+                        $statement_check = $connection->prepare("SELECT COUNT(id) AS naa FROM tbluserevents WHERE eventID=? AND userID=?");
+                        $statement_check->bind_param("ii", $_GET['eventID'], $_SESSION['userID']);
+                        $statement_check->execute();
+                        $res = $statement_check->get_result()->fetch_column();
+                        
+                        if (!$res){
+                            echo ' 
+                                <a class="wala" href="includes/joinEvent.php?eventID='.$e['eventID'].'&userID='.$_SESSION['userID'].'">
+                                    Join Event!
+                                </a>      
+                            ';
+                        } else {
+                            echo ' 
+                                <a class="naa">
+                                    Already Joined Event
+                                </a>      
+                            ';
+                        }
                     }
                 ?>
             </div>

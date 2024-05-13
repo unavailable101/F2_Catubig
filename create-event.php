@@ -27,7 +27,18 @@
                     </div>
                     <div class="info-events">
                         <label for="event-type">Event Type</label>
-                        <input type="text" name="event-type" id="event-type" required>
+                        <!-- <input type="text" name="event-type" id="event-type" required> -->
+                        <select name="event-type" id="event-type" required>
+                            <option value="PUBLIC">
+                                PUBLIC
+                            </option>
+                            <option value="SEMI-PUBLIC">
+                                SEMI-PUBLIC
+                            </option>
+                            <option value="PRIVATE">
+                                PRIVATE
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="inline">
@@ -64,7 +75,7 @@
             $eventDate = $_POST['date'];
             $eventTime = $_POST['time'];
             $eventVenue = $_POST['venue'];
-            $eventDescription = $_POST['description'];
+            $eventDescription = nl2br($_POST['description']);
 
             $statement_checkEvents = $connection->prepare("SELECT eventName, eventType FROM tblevents WHERE eventName=? AND eventType=?");
             $statement_checkEvents->bind_param("ss", $eventName, $eventType);
@@ -72,9 +83,9 @@
             $result = $statement_checkEvents->get_result()->fetch_row();
             
             if(!$result){
-                
-                $statement_addEvents = $connection->prepare("INSERT INTO tblevents (adminID, eventName, eventType, date, time, venue, description) VALUES (?,?,?,?,?,?,?)");
-                $statement_addEvents->bind_param("issssss", $_SESSION['adminID'], $eventName, $eventType, $eventDate, $eventTime, $eventVenue, $eventDescription);
+                $delete = false;
+                $statement_addEvents = $connection->prepare("INSERT INTO tblevents (adminID, eventName, eventType, date, time, venue, description, isDelete) VALUES (?,?,?,?,?,?,?,?)");
+                $statement_addEvents->bind_param("issssssi", $_SESSION['adminID'], $eventName, $eventType, $eventDate, $eventTime, $eventVenue, $eventDescription, $delete);
                 $statement_addEvents->execute();
                 $add_pic = $connection->insert_id;
                 

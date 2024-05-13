@@ -26,6 +26,7 @@
     /* mask-image: linear-gradient(to top, rgba(255, 255, 255, 1) 0%,rgba(255,255,255,0.99) 10%, rgba(255, 255, 255, 0.01) 80%); */
     width: 906px;
     height: 510px;
+    object-fit:cover;
 }
 
 .ticket-nawng:nth-child(1) .event-name{
