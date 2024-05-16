@@ -36,11 +36,17 @@
                     return $res->num_rows > 0;
                 }
 
-                $Statement_allEvents = $connection->prepare("SELECT eventID, eventName, eventType, date, time, image FROM tblevents ORDER BY eventID DESC");
+                $Statement_allEvents = $connection->prepare("SELECT tblevents.eventID, tblevents.eventName, tblevents.eventType, tblevents.date, tblevents.time, tblevents.venue, tblevents.description, tblevents.image, tblevents.isDelete
+                                                            FROM tblevents  
+                                                            INNER JOIN tbladminaccount ON tbladminaccount.adminID = tblevents.adminID
+                                                            INNER JOIN tblaccount ON tbladminaccount.accountID = tblaccount.accountID
+                                                            WHERE tblevents.isDelete = 0 AND tblaccount.isDelete = 0
+                                                            ORDER BY tblevents.eventID DESC");
                 $Statement_allEvents->execute();
                 $res = $Statement_allEvents->get_result();
     
                 while ($e = $res->fetch_assoc()):
+                    if (!$e['isDelete']):
             ?>
         
             <div class="event-container">
@@ -84,6 +90,7 @@
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
             <?php endwhile; ?>
         </div>
     </div>

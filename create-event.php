@@ -40,6 +40,13 @@
                             </option>
                         </select>
                     </div>
+                    <!-- <div class="info-events" id="ticket-field">
+                        <label for="ticket-price">Ticket Price</label>
+                        <input type="number" name="ticket-price" id="ticket-price" >
+                    </div>
+
+                    <script src="js/tickets.js"></script> -->
+
                 </div>
                 <div class="inline">
                     <div class="info-events">

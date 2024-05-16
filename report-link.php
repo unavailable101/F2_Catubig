@@ -26,6 +26,176 @@
             }
         ?>
         
+        <?php
+            $ctr = 1;  
+            $sql_mostJoin ="SELECT username, COUNT(tbluserevents.userID) AS total
+                            FROM tblaccount
+                            INNER JOIN tbluseraccount ON tblaccount.accountID = tbluseraccount.accountID AND tblaccount.isDelete=0
+                            INNER JOIN tbluserevents ON tbluserevents.userID = tbluseraccount.userID
+                            INNER JOIN tblevents ON tbluserevents.eventID = tblevents.eventID AND tblevents.isDelete=0
+                            GROUP BY username
+            ";
+            $mostJoin_result = mysqli_query($connection,$sql_mostJoin);
+        ?>
+        <table class="table" cellspacing="1" width="75%">
+            <center>
+                <h1> Number of Joined Events </h1>
+            </center>
+            <thead>
+                <tr>
+                    <th>Seq. No.</th>
+                    <th>Username</th>
+                    <th>Number of Events Joined</th>
+                    <!-- <th>Username</th> -->
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php 
+                    while($row = $mostJoin_result->fetch_assoc()): 
+                ?>
+            
+                <tr>
+                    <td> <?= $ctr++; ?> </td>
+                    <td> <?= $row['username']; ?> </td>
+                    <td> <?= $row['total']; ?> </td>
+                    <!-- <td> <?= $row['username']; ?> </td> -->
+                </tr>
+                
+            <?php endwhile;?>        
+            </tbody>
+        </table>
+
+        <?php
+            $ctr = 1;   
+            $sql_mostJoin ="SELECT organizationName, COUNT(tbladminorganization.organizationID) AS total
+                            FROM tblorganization
+                            INNER JOIN tbladminorganization
+                            ON tbladminorganization.organizationID = tblorganization.organizationID
+                            INNER JOIN tbladminaccount
+                            ON tbladminorganization.adminID = tbladminaccount.adminID
+                            INNER JOIN tblaccount
+                            ON tbladminaccount.accountID = tblaccount.accountID AND isDelete=0
+                            GROUP BY organizationName
+            ";
+            $mostJoin_result = mysqli_query($connection,$sql_mostJoin);
+        ?>
+        <table class="table" cellspacing="1" width="75%">
+            <center>
+                <h1> Number of Joined Organization</h1>
+            </center>
+            <thead>
+                <tr>
+                    <th>Seq. No.</th>
+                    <th>Organization Name</th>
+                    <th>Number of Join</th>
+                    <!-- <th>Username</th> -->
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php 
+                    while($row = $mostJoin_result->fetch_assoc()): 
+                ?>
+            
+                <tr>
+                    <td> <?= $ctr++; ?> </td>
+                    <td> <?= $row['organizationName']; ?> </td>
+                    <td> <?= $row['total']; ?> </td>
+                    <!-- <td> <?= $row['username']; ?> </td> -->
+                </tr>
+                
+            <?php endwhile;?>        
+            </tbody>
+        </table>
+
+        <?php
+            $ctr = 1;   
+            $sql_mostJoin ="SELECT eventName, COUNT(tbluserevents.eventID) AS total
+                            FROM tblevents
+                            INNER JOIN tbluserevents
+                            ON tbluserevents.eventID = tblevents.eventID
+                            WHERE isDelete=0
+                            GROUP BY eventName
+            ";
+            $mostJoin_result = mysqli_query($connection,$sql_mostJoin);
+        ?>
+        <table class="table" cellspacing="1" width="75%">
+            <center>
+                <h1> Number of Users Joined the Events </h1>
+            </center>
+            <thead>
+                <tr>
+                    <th>Seq. No.</th>
+                    <th>Event Name</th>
+                    <th>Number of Join</th>
+                    <!-- <th>Username</th> -->
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php 
+                    while($row = $mostJoin_result->fetch_assoc()): 
+                ?>
+            
+                <tr>
+                    <td> <?= $ctr++; ?> </td>
+                    <td> <?= $row['eventName']; ?> </td>
+                    <td> <?= $row['total']; ?> </td>
+                    <!-- <td> <?= $row['username']; ?> </td> -->
+                </tr>
+                
+            <?php endwhile;?>        
+            </tbody>
+        </table>
+
+        <?php
+            $monthNames = array(
+                1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',
+                7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec'
+            );
+            $ctr = 1;   
+            $sql_releaseDate = "SELECT COUNT(eventID) AS count, MONTH(date) AS release_months, YEAR(date) AS release_year 
+                        FROM tblevents
+                        WHERE date >= CURDATE() AND isDelete=0
+                        GROUP BY MONTH(date), 
+                                YEAR(date)
+                        ORDER BY 
+                                release_year ASC,
+                                MONTH(date) ASC
+                                ";
+            $releaseDate_result = mysqli_query($connection, $sql_releaseDate);  
+        ?>
+        <table class="table" cellspacing="1" width="75%">
+            <center>
+                <h1> Number of Upcoming Events </h1>
+            </center>
+            <thead>
+                <tr>
+                    <th>Seq. No.</th>
+                    <th>Date</th>
+                    <th>Joined</th>
+                    <!-- <th>Username</th> -->
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php 
+                    while($row = $releaseDate_result->fetch_assoc()): 
+                ?>
+            
+                <tr>
+                    <td> <?= $ctr++; ?> </td>
+                    <td> <?= $monthNames[(int)$row['release_months']] . ' ' . $row['release_year']; ?> </td>
+                    <td> <?= $row['count']; ?> </td>
+                    <!-- date('d M', strtotime($ue['date'])) -->
+                    <!-- <td> <?= $row['username']; ?> </td> -->
+                </tr>
+                
+            <?php endwhile;?>        
+            </tbody>
+        </table>
+        
         <!-- ambot mao bha ni imo gusto -->
         <?php
             $ctr = 1;   
@@ -39,23 +209,14 @@
                                                                             ) AS avg_counts
                                                                         ) AS average 
                             FROM tblevents
+                            WHERE isDelete=0
                             GROUP BY eventType";
-            // kuan nlng ni, total number of eventtype then averge user join this type of event
-            // $sql_eventType ="SELECT 
-            //                     eventType, 
-            //                     COUNT(eventType) AS types
-            //                     AVG(types) AS average
-            //                 FROM 
-            //                     tblevents
-            //                 GROUP BY 
-            //                     eventType
-            //                 ";
             $eventType_result = mysqli_query($connection,$sql_eventType);
             $res;
         ?>
         <table class="table" cellspacing="1" width="75%">
             <center>
-                <h1> Average Event Types </h1>
+                <h1> Event Types </h1>
             </center>
             <thead>
                 <tr>
@@ -79,13 +240,23 @@
                 </tr>
                 
             <?php endwhile;?>  
-                <tr>
+                <!-- <tr>
                     <td colspan="2">AVERAGE</td>
                     <td> <?= $res; ?> </td>
-                </tr>
+                </tr> -->
             </tbody>
         </table> 
 
+
+        <!-- ///////////////////////////////////////////////////////////////////////////////////// -->
+        <center>
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+        </center>
         <?php
             $ctr = 1;   
             $sql_account ="SELECT tblaccount.firstName, tblaccount.lastName, tblaccount.username FROM tblaccount INNER JOIN tbluseraccount ON tblaccount.accountID = tbluseraccount.accountID";

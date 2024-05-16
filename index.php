@@ -29,7 +29,12 @@
                 ';
             }
         ?>    
-        <?php
+
+        <center>
+            HELLO PIPOL!
+        </center>
+
+        <!-- <?php
             $ctr = 1;
             $sql_events ="Select * from tblevents";
             $all_events = mysqli_query($connection,$sql_events);
@@ -159,7 +164,7 @@
                 <?php endwhile;?>
                 
             </tbody>
-        </table>
+        </table> -->
 
     </div>
 
