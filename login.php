@@ -45,6 +45,27 @@
         </span>
         </div>
 
+        <!-- modal -->
+        
+
+        <script>
+            function showModal() {
+                document.getElementById('deletedAccountModal').style.display = 'block';
+            }
+
+            function closeModal() {
+                document.getElementById('deletedAccountModal').style.display = 'none';
+            }
+
+            // Close the modal when clicking outside of the modal content
+            window.onclick = function(event) {
+                var modal = document.getElementById('deletedAccountModal');
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+
 </body>
 
 <?php
@@ -71,8 +92,8 @@
             </script>
             ";
         } else {
-            if (!$account_row['isDelete']){
-                if ( password_verify($pwd, $account_row['password'] ) ){
+            if ( password_verify($pwd, $account_row['password'] ) ){
+                if (!$account_row['isDelete']){
                     $query1 = "SELECT isAdmin from tbladminstatus WHERE accountID=?";
                     $statement1 = $connection->prepare($query1);
                     $statement1->bind_param("s", $account_row['accountID']);
@@ -107,14 +128,30 @@
     
                     header("location: index.php");
                 } else {
-                    // echo "<script language='javascript'>
-                    //         alert('Incorrect password');
-                    //     </script>";
-                    echo "<script>
-                            var x = document.getElementById('exist');
-                            x.innerHTML = '*Incorrect password';
-                        </script>";
+                    // echo '
+                    //     <script>showModal();</script>
+                    // ';
+                    echo '
+                    <div id="deletedAccountModal" class="modal">
+                        <div class="modal-content">
+                            <h2>Account Deactivated</h2>
+                            <p>Your account has been deactivated. If you click agree, your account will be activated again and will be redirected to your homepage.</p>
+                            <div class="modal-buttons">
+                                <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+                                <a href="includes/activateAccount.php?accountID='.$account_row['accountID'].'&username='.$account_row['username'].'" class="agree-btn">Agree</a>
+                            </div>
+                        </div>
+                    </div>
+                    ';
                 }
+            } else {
+                // echo "<script language='javascript'>
+                //         alert('Incorrect password');
+                //     </script>";
+                echo "<script>
+                        var x = document.getElementById('exist');
+                        x.innerHTML = '*Incorrect password';
+                    </script>";
             }
         }
     }

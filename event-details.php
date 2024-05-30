@@ -60,28 +60,56 @@
             </div>
             <div class="more-details">
                 <?php
-                    if (!$_SESSION['isAdmin']){
+                    if (!$_SESSION['isAdmin']) {
                         $statement_check = $connection->prepare("SELECT COUNT(id) AS naa FROM tbluserevents WHERE eventID=? AND userID=?");
                         $statement_check->bind_param("ii", $_GET['eventID'], $_SESSION['userID']);
                         $statement_check->execute();
-                        $res = $statement_check->get_result()->fetch_column();
-                        
-                        if (!$res){
+                        $res = $statement_check->get_result();
+                        $row = $res->fetch_assoc();
+
+                        if ($row['naa'] == 0) {
                             echo ' 
-                                <a class="wala" href="includes/joinEvent.php?eventID='.$e['eventID'].'&userID='.$_SESSION['userID'].'">
+                                <a class="wala" href="includes/joinEvent.php?eventID='.$_GET['eventID'].'&userID='.$_SESSION['userID'].'">
                                     Join Event!
                                 </a>      
                             ';
                         } else {
                             echo ' 
-                                <a class="naa">
-                                    Already Joined Event
+                                <a class="naa" href="includes/cancel-join.php?eventID='.$_GET['eventID'].'&userID='.$_SESSION['userID'].'">
+                                    Cancel Join Event
                                 </a>      
                             ';
                         }
+                    } 
+                    
+                    $statement_joins = $connection->prepare("SELECT tblaccount.username AS username, COUNT(tbluserevents.id) AS joiners 
+                                                            FROM tblaccount 
+                                                            INNER JOIN tbluseraccount ON tblaccount.accountID = tbluseraccount.accountID 
+                                                            INNER JOIN tbluserevents ON tbluserevents.userID = tbluseraccount.userID 
+                                                            WHERE tbluserevents.eventID = ? 
+                                                            GROUP BY tblaccount.username");
+                    $statement_joins->bind_param("i", $_GET['eventID']);
+                    $statement_joins->execute();
+                    $result_joins = $statement_joins->get_result();
+
+                    $joiners = [];
+                    while ($joiner = $result_joins->fetch_assoc()) {
+                        $joiners[] = $joiner['username'];
                     }
+                    
+                    $joinerCount = count($joiners);
+                    
+                    echo '<h3>Join: ' . $joinerCount . '</h3>';
+                    
+                    // Display list of joiners
+                    echo '<div class="joiners">';
+                    foreach ($joiners as $username) {
+                        echo '<p>' . $username . '</p>';
+                    }
+                    echo '</div>';
                 ?>
             </div>
+
         </div>
     
     </div>

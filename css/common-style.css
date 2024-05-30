@@ -79,6 +79,11 @@ body{
     padding: 2% 5%;
 }
 
+.main h2{
+    margin-top: 50px;
+    text-decoration: underline;
+}
+
 .for-admin{
     padding: 20px;
     /* border: 1px solid whitesmoke; */
@@ -93,6 +98,7 @@ body{
 }
 
 .for-admin a span{
+    background-color: black;
     border: 1px solid #fff;
     padding: 10px;
     /* margin: 0 10px; */

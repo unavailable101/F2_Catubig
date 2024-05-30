@@ -235,7 +235,10 @@
                         </div>
                     </div>
                     <div class="admin-events">
-                    <div class="list-top-events">
+                        <div class="test">
+                            <a id="archive">Archive</a>
+                        </div>
+                    <div class="list-top-events all-admin-events">
                         <?php
                             if ($_SESSION['isAdmin']){
                                 $statement_adminEvents = $connection->prepare("SELECT eventID, eventName, eventType, image, isDelete FROM tblevents WHERE adminID=? ORDER BY eventID DESC");
@@ -296,6 +299,44 @@
                                 }
                             }
                         ?>
+                    </div>
+                    <div class="list-top-events archive-events">
+                    <?php
+                            if ($_SESSION['isAdmin']){
+                                $statement_adminEvents = $connection->prepare("SELECT eventID, eventName, eventType, image, isDelete FROM tblevents WHERE adminID=? ORDER BY eventID DESC");
+                                $statement_adminEvents->bind_param("i", $_SESSION['adminID']);
+                                $statement_adminEvents->execute();
+                                $res_adminEvents = $statement_adminEvents->get_result();
+
+                                while($e = $res_adminEvents->fetch_assoc()){
+                                    if ($e['isDelete']){
+                                        echo '
+                                        
+                                        <div class="event-content">
+                                            
+                                            <div class="event-pic">
+                                                <a href="event-details.php?eventID='.$e['eventID'].'">
+                                                    <img src="images/events/'.$e['image'].'">
+                                                        <div class="event-name">
+                                                        <div>'.$e['eventName'].'</div>
+                                                        <div>'.$e['eventType'].'</div>
+                                                    </div>    
+                                                </a>
+                                            </div>
+                                            
+                                            <div class="delete-update">
+                                                <div>
+                                                    <a href="includes/enableEvents.php?eventID='.$e['eventID'].'">
+                                                        RESTORE
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+                                    }
+                                }
+                            }
+                            ?>
                     </div>
                     </div>
                 </div>

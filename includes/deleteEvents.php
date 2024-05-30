@@ -6,5 +6,6 @@
     $statement = $connection->prepare("UPDATE tblevents SET isDelete = ? WHERE eventID=?");
     $statement->bind_param("ii", $delete, $_GET['eventID']);
     $statement->execute();
-    header("location: ../index.php");
+    // header("location: ../index.php");
+    header("location: ../profile.php");
 ?>

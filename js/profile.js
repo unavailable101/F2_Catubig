@@ -20,4 +20,13 @@ document.addEventListener("DOMContentLoaded", function() {
         adminevents.style.display = "block";
         overview.style.display = "none";
     });
+
+    const archiveBtn = document.getElementById("archive");
+    const archiveOverview = document.querySelector(".archive-events");
+    const adminOverview = document.querySelector(".all-admin-events");
+
+    archiveBtn.addEventListener("click", function(){
+        adminOverview.style.display = "none";
+        archiveOverview.style.display = 'block';
+    });
 });

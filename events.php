@@ -19,12 +19,12 @@
                     <a href="create-event.php">
                         <span>Create Event</span>
                     </a>
-                    <a href="report-link.php">
-                        <span>Report</span>
-                    </a>
-                </div>
-                ';
-            }
+                    </div>
+                    ';
+                }
+                // <a href="report-link.php">
+                //     <span>Report</span>
+                // </a>
         ?>
         <div class="for-events">
             <?php

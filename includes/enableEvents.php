@@ -5,5 +5,6 @@
     $sql_activateEvent->bind_param("i", $_GET['eventID']);
     $sql_activateEvent->execute();
 
-    header("location: ../report-link.php");
+    // header("location: ../report-link.php");
+    header("location: ../profile.php");
 ?>

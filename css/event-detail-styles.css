@@ -145,8 +145,24 @@
     cursor: pointer;
     transition: .5s;
 }
-
+.more-details:nth-child(2) .naa:hover,
 .more-details:nth-child(2) .wala:hover{
     background: #08D9D6;
     transition: .5s;
+}
+
+.joiners{
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    overflow-y: auto;
+    width: 100%;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+.joiners p{
+    border-bottom: 1px dashed grey;
+    padding: 5px;
 }

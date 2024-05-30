@@ -223,3 +223,45 @@ body {
     color:#03e9f4;
     transition: .5s;
 }
+
+/* new */
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+.modal-content {
+    background-color: #1A1C20;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 50%;
+}
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+.cancel-btn, .agree-btn {
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #1A1C20;
+    border: 1px solid #03e9f4;
+    color: #fff;
+    transition: .5s;
+}
+
+.cancel-btn:hover, .agree-btn:hover{
+    background-color: #03e9f4;
+    transition: .5s;
+}

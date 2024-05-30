@@ -340,3 +340,26 @@
 .username{
     font-size: larger;
 }
+
+.test{
+    margin-top: 20px;
+    /* border: 1px solid wheat; */
+}
+
+.test a{
+    padding: 10px;
+    border: 1px solid white;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.test a:hover{
+    background-color: #03e9f4;
+    transition: .3s;
+}
+
+.archive-events{
+    display: none;
+}

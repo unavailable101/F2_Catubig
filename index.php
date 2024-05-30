@@ -3,6 +3,20 @@
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/events-styles.css">
+
+<style>
+    .for-events{
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+        scrollbar-color: #00FFFFFF;
+    }
+    .for-events .event-container{
+        margin: 5px 10px;
+    }
+</style>
 
 <body>
     <?php
@@ -22,17 +36,326 @@
                     <a href="create-event.php">
                         <span>Create Event</span>
                     </a>
-                    <a href="report-link.php">
-                        <span>Report</span>
-                    </a>
-                </div>
-                ';
-            }
+                    </div>
+                    ';
+                }
+                // <a href="report-link.php">
+                //     <span>Report</span>
+                // </a>
         ?>    
 
-        <center>
+            <h2>UPCOMING EVENTS</h2>
+            
+            <div class="for-events">
+
+                <?php
+                    $statement_upcoming_events = $connection->prepare("SELECT eventID, eventName, eventType, date, time, image, isDelete FROM tblevents WHERE date >= CURDATE() ORDER BY date ASC, time ASC");
+                    $statement_upcoming_events->execute();
+                    $res_upEvents = $statement_upcoming_events->get_result();
+
+                    while ($e = $res_upEvents->fetch_assoc()):
+                        if (!$e['isDelete']):
+                ?>
+
+                <div class="event-container">
+                    <div class="event-bg">
+                        <img src = "images/events/<?=$e['image'];?>">
+                        <a class="view-details" href="event-details.php?eventID=<?=$e['eventID'];?>">View Details</a>
+                        <div class="event-infos">
+                            <div class="the-event">
+                                <?=$e['eventName'];?>
+                            </div>
+                            <div class="the-event">
+                                <div class="event-details">
+                                    <span>
+                                        <?=$e['eventType'];?>
+                                    </span>
+                                    <br>
+                                    <!-- <br> -->
+                                    <?php
+                                        if (!$_SESSION['isAdmin']){
+                                            if (!isJoin($connection, $e['eventID'])){
+                                                echo '
+                                                    <a class="not-joined" href="includes/joinEvent.php?userID='.$_SESSION['userID'].'&eventID='.$e['eventID'].'">
+                                                        Join
+                                                    </a>
+                                                ';
+                                            } else {
+                                                echo '
+                                                    <a class="has-joined">
+                                                        Already Joined
+                                                    </a>
+                                                ';
+                                            }
+                                        }
+                                    ?>
+                                </div>
+                                <div class="event-details">
+                                    <div>Date: <?= date('d M Y',strtotime($e['date']));?></div>
+                                    <div>Time:  <?= date('h:i A', strtotime($e['time']));?></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <?php endif; ?>
+                <?php endwhile; ?>
+            </div>
+
+            <h2>POPULAR EVENTS</h2>
+
+            <div class="for-events">
+
+                <?php
+                        $statement_popular_events = $connection->prepare("SELECT tblevents.eventID, eventName, eventType, date, time, image, isDelete, COUNT(tbluserevents.eventID) AS total_join 
+                                                                            FROM tblevents, tbluserevents
+                                                                            WHERE tblevents.date >= CURDATE() AND tbluserevents.eventID=tblevents.eventID
+                                                                            GROUP BY tbluserevents.eventID
+                                                                            ORDER BY COUNT(tbluserevents.eventID) DESC");
+    
+                        $statement_popular_events->execute();
+                        $res_popEvents = $statement_popular_events->get_result();
+    
+                        while ($e = $res_popEvents->fetch_assoc()):
+                            if (!$e['isDelete']):
+                    ?>
+    
+                    <div class="event-container">
+                        <div class="event-bg">
+                            <img src = "images/events/<?=$e['image'];?>">
+                            <a class="view-details" href="event-details.php?eventID=<?=$e['eventID'];?>">View Details</a>
+                            <div class="event-infos">
+                                <div class="the-event">
+                                    <?=$e['eventName'];?>
+                                </div>
+                                <div class="the-event">
+                                    <div class="event-details">
+                                        <span>
+                                            <?=$e['eventType'];?>
+                                        </span>
+                                        <br>
+                                        <!-- <br> -->
+                                        <?php
+                                            if (!$_SESSION['isAdmin']){
+                                                if (!isJoin($connection, $e['eventID'])){
+                                                    echo '
+                                                        <a class="not-joined" href="includes/joinEvent.php?userID='.$_SESSION['userID'].'&eventID='.$e['eventID'].'">
+                                                            Join
+                                                        </a>
+                                                    ';
+                                                } else {
+                                                    echo '
+                                                        <a class="has-joined">
+                                                            Already Joined
+                                                        </a>
+                                                    ';
+                                                }
+                                            }
+                                        ?>
+                                    </div>
+                                    <div class="event-details">
+                                        <div>Date: <?= date('d M Y',strtotime($e['date']));?></div>
+                                        <div>Time:  <?= date('h:i A', strtotime($e['time']));?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <?php endif; ?>
+                    <?php endwhile; ?>
+            </div>
+            
+            <?php
+                $statement_public_events = $connection->prepare("SELECT eventID, eventName, eventType, date, time, image, isDelete
+                FROM tblevents
+                WHERE eventType=?");
+            ?>
+
+            <h2>PUBLIC EVENTS</h2>
+
+            <div class="for-events">
+
+                <?php
+                        $param = 'PUBLIC';
+                        $statement_public_events->bind_param("s", $param);
+                        $statement_public_events->execute();
+                        $res_pubEvents = $statement_public_events->get_result();
+    
+                        while ($e = $res_pubEvents->fetch_assoc()):
+                            if (!$e['isDelete']):
+                    ?>
+    
+                    <div class="event-container">
+                        <div class="event-bg">
+                            <img src = "images/events/<?=$e['image'];?>">
+                            <a class="view-details" href="event-details.php?eventID=<?=$e['eventID'];?>">View Details</a>
+                            <div class="event-infos">
+                                <div class="the-event">
+                                    <?=$e['eventName'];?>
+                                </div>
+                                <div class="the-event">
+                                    <div class="event-details">
+                                        <span>
+                                            <?=$e['eventType'];?>
+                                        </span>
+                                        <br>
+                                        <!-- <br> -->
+                                        <?php
+                                            if (!$_SESSION['isAdmin']){
+                                                if (!isJoin($connection, $e['eventID'])){
+                                                    echo '
+                                                        <a class="not-joined" href="includes/joinEvent.php?userID='.$_SESSION['userID'].'&eventID='.$e['eventID'].'">
+                                                            Join
+                                                        </a>
+                                                    ';
+                                                } else {
+                                                    echo '
+                                                        <a class="has-joined">
+                                                            Already Joined
+                                                        </a>
+                                                    ';
+                                                }
+                                            }
+                                        ?>
+                                    </div>
+                                    <div class="event-details">
+                                        <div>Date: <?= date('d M Y',strtotime($e['date']));?></div>
+                                        <div>Time:  <?= date('h:i A', strtotime($e['time']));?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <?php endif; ?>
+                    <?php endwhile; ?>
+            </div>
+
+            <h2>SEMI-PUBLIC EVENTS</h2>
+
+            <div class="for-events">
+
+                <?php
+                        $param = 'SEMI-PUBLIC';
+                        $statement_public_events->bind_param("s", $param);
+                        $statement_public_events->execute();
+                        $res_pubEvents = $statement_public_events->get_result();
+    
+                        while ($e = $res_pubEvents->fetch_assoc()):
+                            if (!$e['isDelete']):
+                    ?>
+    
+                    <div class="event-container">
+                        <div class="event-bg">
+                            <img src = "images/events/<?=$e['image'];?>">
+                            <a class="view-details" href="event-details.php?eventID=<?=$e['eventID'];?>">View Details</a>
+                            <div class="event-infos">
+                                <div class="the-event">
+                                    <?=$e['eventName'];?>
+                                </div>
+                                <div class="the-event">
+                                    <div class="event-details">
+                                        <span>
+                                            <?=$e['eventType'];?>
+                                        </span>
+                                        <br>
+                                        <!-- <br> -->
+                                        <?php
+                                            if (!$_SESSION['isAdmin']){
+                                                if (!isJoin($connection, $e['eventID'])){
+                                                    echo '
+                                                        <a class="not-joined" href="includes/joinEvent.php?userID='.$_SESSION['userID'].'&eventID='.$e['eventID'].'">
+                                                            Join
+                                                        </a>
+                                                    ';
+                                                } else {
+                                                    echo '
+                                                        <a class="has-joined">
+                                                            Already Joined
+                                                        </a>
+                                                    ';
+                                                }
+                                            }
+                                        ?>
+                                    </div>
+                                    <div class="event-details">
+                                        <div>Date: <?= date('d M Y',strtotime($e['date']));?></div>
+                                        <div>Time:  <?= date('h:i A', strtotime($e['time']));?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <?php endif; ?>
+                    <?php endwhile; ?>
+            </div>
+
+            <h2>PRIVATE EVENTS</h2>
+
+            <div class="for-events">
+
+                <?php
+                        $param = 'PRIVATE';
+                        $statement_public_events->bind_param("s", $param);
+                        $statement_public_events->execute();
+                        $res_pubEvents = $statement_public_events->get_result();
+    
+                        while ($e = $res_pubEvents->fetch_assoc()):
+                            if (!$e['isDelete']):
+                    ?>
+    
+                    <div class="event-container">
+                        <div class="event-bg">
+                            <img src = "images/events/<?=$e['image'];?>">
+                            <a class="view-details" href="event-details.php?eventID=<?=$e['eventID'];?>">View Details</a>
+                            <div class="event-infos">
+                                <div class="the-event">
+                                    <?=$e['eventName'];?>
+                                </div>
+                                <div class="the-event">
+                                    <div class="event-details">
+                                        <span>
+                                            <?=$e['eventType'];?>
+                                        </span>
+                                        <br>
+                                        <!-- <br> -->
+                                        <?php
+                                            if (!$_SESSION['isAdmin']){
+                                                if (!isJoin($connection, $e['eventID'])){
+                                                    echo '
+                                                        <a class="not-joined" href="includes/joinEvent.php?userID='.$_SESSION['userID'].'&eventID='.$e['eventID'].'">
+                                                            Join
+                                                        </a>
+                                                    ';
+                                                } else {
+                                                    echo '
+                                                        <a class="has-joined">
+                                                            Already Joined
+                                                        </a>
+                                                    ';
+                                                }
+                                            }
+                                        ?>
+                                    </div>
+                                    <div class="event-details">
+                                        <div>Date: <?= date('d M Y',strtotime($e['date']));?></div>
+                                        <div>Time:  <?= date('h:i A', strtotime($e['time']));?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <?php endif; ?>
+                    <?php endwhile; ?>
+            </div>
+
+        <!-- <center>
             HELLO PIPOL!
-        </center>
+        </center> -->
 
         <!-- <?php
             $ctr = 1;
