@@ -80,7 +80,15 @@
                                 </a>      
                             ';
                         }
-                    } 
+                    } else {
+                        if ($e['isDelete']){
+                            echo '
+                            <a class="wala" href="includes/enableEvents.php?eventID='.$e['eventID'].'">
+                                Restore Event
+                            </a> 
+                            ';
+                        }
+                    }
                     
                     $statement_joins = $connection->prepare("SELECT tblaccount.username AS username, COUNT(tbluserevents.id) AS joiners 
                                                             FROM tblaccount 

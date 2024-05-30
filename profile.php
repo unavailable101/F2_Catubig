@@ -235,10 +235,10 @@
                         </div>
                     </div>
                     <div class="admin-events">
+                    <div class="list-top-events all-admin-events">
                         <div class="test">
                             <a id="archive">Archive</a>
                         </div>
-                    <div class="list-top-events all-admin-events">
                         <?php
                             if ($_SESSION['isAdmin']){
                                 $statement_adminEvents = $connection->prepare("SELECT eventID, eventName, eventType, image, isDelete FROM tblevents WHERE adminID=? ORDER BY eventID DESC");
@@ -301,6 +301,9 @@
                         ?>
                     </div>
                     <div class="list-top-events archive-events">
+                    <div class="test">
+                        <a id="back">Back</a>
+                    </div>
                     <?php
                             if ($_SESSION['isAdmin']){
                                 $statement_adminEvents = $connection->prepare("SELECT eventID, eventName, eventType, image, isDelete FROM tblevents WHERE adminID=? ORDER BY eventID DESC");

@@ -22,11 +22,17 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     const archiveBtn = document.getElementById("archive");
+    const backBtn = document.getElementById("back");
     const archiveOverview = document.querySelector(".archive-events");
     const adminOverview = document.querySelector(".all-admin-events");
 
     archiveBtn.addEventListener("click", function(){
-        adminOverview.style.display = "none";
+        adminOverview.style.display = 'none';
         archiveOverview.style.display = 'block';
+    });
+
+    backBtn.addEventListener("click", function(){
+        archiveOverview.style.display = 'none';
+        adminOverview.style.display = 'block';
     });
 });

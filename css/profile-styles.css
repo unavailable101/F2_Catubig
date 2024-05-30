@@ -341,9 +341,8 @@
     font-size: larger;
 }
 
-.test{
-    margin-top: 20px;
-    /* border: 1px solid wheat; */
+.test {
+    margin-bottom: 10px;
 }
 
 .test a{
@@ -353,6 +352,7 @@
     color: white;
     cursor: pointer;
     transition: .3s;
+    margin-bottom: 10px;
 }
 
 .test a:hover{
@@ -362,4 +362,8 @@
 
 .archive-events{
     display: none;
+}
+
+.all-admin-events{
+    display: block;
 }
